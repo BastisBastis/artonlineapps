@@ -1,0 +1,18 @@
+.tuner {
+  width:8rem;
+  font-size:1.25rem;
+  background-color:grey;
+  text-align: center;
+  border: 2px solid black;
+  border-radius:0.75rem;
+}
+
+.indicator {
+  height:2rem;
+  width:2px;
+  background-color:red;
+  position:relative;
+  margin: 0 auto;
+  
+  
+}
