@@ -134,7 +134,10 @@ export default class Note extends Phaser.GameObjects.Sprite {
       this.accidental.destroy();
     }
     console.log(this.ledgerLines);
-    this.ledgerLines.forEach(line=>line.destroy())
+    //this.ledgerLines.forEach(line=>line.destroy())
+    for (const line of this.ledgerLines) {
+     line.destroy();
+    }
     super.destroy();
   }
   
