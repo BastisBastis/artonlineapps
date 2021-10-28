@@ -2,6 +2,7 @@ import {PitchDetector} from "pitchy"
 
 const notes=["C","C#","D","Eb","E","F","F#","G","G#","A","Bb","B"];
 
+let oldDetector = false;
 
 function noteFromPitch( frequency ) {
 	const noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
@@ -19,9 +20,13 @@ function centsOffFromPitch( frequency, note ) {
 
 export default class NoteDetector {
   constructor (callback) {
+    if (oldDetector) {
+      oldDetector.active=false;
+    }
     this.callback=callback;
     this.active=false;
     this.startDetecting();
+    oldDetector=this;
     
   }
   
@@ -48,6 +53,7 @@ export default class NoteDetector {
   }
   
   updatePitch(analyserNode, detector, input, sampleRate) {
+    try {
     if (!this.active) {
       return false;
     }
@@ -71,6 +77,7 @@ export default class NoteDetector {
       () => this.updatePitch(analyserNode, detector, input, sampleRate),
       100
     );
+    } catch (err) { alert(err) }
   }
   
   

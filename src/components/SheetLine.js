@@ -7,9 +7,14 @@ import { IonPhaser } from '@ion-phaser/react'
 
 //Game Scenes
 import Game from "./NoteReader/scenes/Game"
+import GameOver from "./NoteReader/scenes/GameOver"
 
 //styles
 import styles from "./SheetLine.module.css"
+
+//Objects
+import NoteDetector from "../objects/NoteDetector"
+
 
 const game = {
   width:"100%",
@@ -19,28 +24,60 @@ const game = {
     noAudio: true
   },
   scale: {
+    parent:"sl",
       width: 600,
       height: 400,
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },   
-    
   scene: [
-    Game
+    Game,
+    GameOver
   ]
     
 }
 
 
-
 const SheetLine = () => {
+  const [noteDetector,setNoteDetector] =useState(false);
+    const [started,setStarted] = useState(false);
   
+  const setParameters=(results)=> {
+    //console.log(results)
+  }
   
-  return (
-    <div className={styles.gameContainer}>
-      <IonPhaser game={game} />
-    </div>
-  );
+  const start=()=> {
+    game.callbacks={preBoot:(g)=>
+      {
+        console.log(g.scene)
+        g.noteDetector=noteDetector;}
+    }
+    setStarted(true);
+  }
+  
+  if (!noteDetector) {
+    
+    setNoteDetector(new NoteDetector((res)=>{setParameters(res)}));
+    //startNoteDetector()
+    
+  }
+  
+  if (started) {
+    return (
+      
+        <IonPhaser game={game} />
+        
+    );
+  } else {
+    return (
+      <div className={styles.gameContainer}>
+        <button onClick={start}>Starta</button>
+      </div>
+    )
+  }
+  
 }
+
+
 
 export default SheetLine

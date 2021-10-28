@@ -11,11 +11,16 @@ const PageContainer = () => {
   
   const local=true;
   
-  console.log("hopp")
+  const slStyle={
+    width:"20rem",
+  height:"15rem"
+  }
   return (
     <>
       {/*< Tuner />*/}
-      < SheetLine />
+      <div style={slStyle} id="sl">
+        < SheetLine />
+      </div>
     </>
   );
 }

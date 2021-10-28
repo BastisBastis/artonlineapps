@@ -13,13 +13,12 @@ import SharpImage from "../assets/sharp.png"
 //Libraries and stuff
 import NoteDetector from "../../../objects/NoteDetector"
 
+console.error=console.log;
+
 export default class Game extends Phaser.Scene {
   constructor () {
     super("Game");
-    this.points=0;
-    this.lives=2;
-    this.level=0;
-    this.nd =new NoteDetector((res)=>{this.noteDetected(res)})
+    
   }
   
   preload() {
@@ -34,6 +33,12 @@ export default class Game extends Phaser.Scene {
   }
   
   create () {
+    this.points=0;
+    this.lives=1;
+    this.level=0;
+    
+    this.game.noteDetector.callback=(res)=>{this.noteDetected(res)};
+    
     this.cameras.main.setBackgroundColor('#bbbbff');
     this.pointsLabel = this.add.text(
         50, 
@@ -47,12 +52,13 @@ export default class Game extends Phaser.Scene {
     this.livesLabel = this.add.text(
         50, 
         100, 
-        "Liv: "+this.lives, 
+        "",
         { 
           font: "40px Arial", 
           fill: "#ffffff" 
         }
       );
+    this.displayLives()
     
       
     this.staffHeight=this.cameras.main.height*0.3
@@ -75,21 +81,20 @@ export default class Game extends Phaser.Scene {
     }
     this.nextNote();
     //this.note=Note.fromIndex(this,11,-1)
-    console.log(1)
-    const setParameters=res=>{
-      console.log(res)
-    }
+    
     
     //this.noteDetector = new NoteDetector((res)=>{this.noteDetected(res)});
 
   }
   
   noteDetected(res) {
-    //console.log(res)
-    if (this.pointsLabel)
-      this.pointsLabel.text=res.note
+    //console.log(res.note)
+    if (this.pointsLabel!==undefined) {
+      //this.pointsLabel.text=res.note
+      //console.log("hm")
+      }
     
-    if (res.noteNumber===this.note.noteNumber) {
+    if (this.note && res.noteNumber==this.note.noteNumber) {
       this.addPoint();
       this.nextNote();
     }
@@ -104,6 +109,15 @@ export default class Game extends Phaser.Scene {
   
   loseLife() {
     this.lives--;
+    this.displayLives();
+    if (this.lives<=0) {
+      
+      this.scene.start("gameOver",{points:this.points})
+      
+    }
+  }
+  
+  displayLives() {
     this.livesLabel.text="Liv: "+this.lives;
   }
   
@@ -120,7 +134,7 @@ export default class Game extends Phaser.Scene {
     const dx = -speed*delta
     if (this.note) {
       if (this.note.x<this.killX) {
-        //Lose life
+        this.loseLife()
         this.nextNote();
       }
       this.note.move(dx);
