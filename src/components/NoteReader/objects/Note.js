@@ -1,6 +1,23 @@
 import Phaser from "phaser"
 
 const pitchIndex= {
+ "-28":23, // B2
+ "-27":24, // C1
+ "-26":26, // D1
+ "-25":28, // E1
+ "-24":29, // F1
+ "-23":31, // G1
+ "-22":33, // A1
+ "-21":35, // B1
+ "-20":36, // C
+ "-19":38, // D
+ "-18":40, // E
+ "-17":41, // F
+ "-16":43, // G
+ "-15":45, // A
+ "-14":47, // B
+ "-13":48, // c
+ "-12":50, // d
  "-11":52, // e
  "-10":53, // f
   "-9":55, // g
@@ -28,17 +45,21 @@ const pitchIndex= {
 }
 
 export default class Note extends Phaser.GameObjects.Sprite {
-  constructor(scene,x,y,noteNumber,accidental,ledgerLines) {
+  constructor(scene,x,y,noteNumber,accidental,ledgerLines,lineGap) {
     super(scene,x,y,"note");
-    this.scale=0.26;
+    try {
+    this.scale=lineGap*0.26/30;
     this.noteNumber=noteNumber;
     this.scene=scene;
+    console.log(noteNumber)
+    
     scene.add.existing(this);
     
-    this.accidental = this.getAccidental(accidental);
+    this.accidental = this.getAccidental(accidental,lineGap);
     
     this.ledgerLines=ledgerLines;
     //console.log(noteNumber)
+  } catch (e) { alert(e)}
   }
   
   getAccidental(accIndex) {
@@ -70,13 +91,14 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
   }
   
-  static getLedgerLines(scene, x,index) {
-    try{
-    const w = 50;
-    const dx = 25;
-    const dy = 14.5;
-    const extra=4;
-    const thickness=2;
+  static getLedgerLines(scene, x,index,lineGap=29,lineThickness=2) {
+    const f= lineGap/29;
+    
+    const w = 50*f;
+    const dx = 25*f;
+    const dy = lineGap/2;
+    const extra=4*f;
+    const thickness=lineThickness
     const lines =[];
     for (let i = 6; i<=index; i+=2) {
       const y = scene.cameras.main.centerY-dy*i;
@@ -93,52 +115,91 @@ export default class Note extends Phaser.GameObjects.Sprite {
     }
     
     return lines;
-    } catch (err) {alert(err)}
+    
   }
   
-  static fromIndex(scene,index,accidental,flats,sharps) {
+  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g") {
+    
     const x=scene.cameras.main.width+30 + Math.abs(accidental)*30;
-    const dy=14.5;
-    const y = scene.cameras.main.centerY-index*dy;
+    const dy=lineGap*0.5//14.5;
+    const y = scene.cameras.main.centerY-index*dy-dy*0.05;
     
     //rewrite to only allow provided accidentsals in the random roll
-    let naturalIndex=index;
-    while (naturalIndex<0)
-      naturalIndex+=7;
-    if (accidental<0 && !flats.includes(naturalIndex%7) || accidental>0 && !sharps.includes(naturalIndex%7))
-      accidental=0;
-    const noteNumber = pitchIndex[index]+accidental;
+    
+    const clefAdjust = {g:0,f:-12,c:-6}[clef]
+      
+    //const realIndex=index*1+clefAdjust
+    const noteNumber = pitchIndex[Number(index) + clefAdjust]+accidental;
     
     
-    const ledgerLines=Note.getLedgerLines(scene,x,index);
+    const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness);
     
     
-    return new Note(scene,x,y,noteNumber,accidental,ledgerLines);
+    return new Note(scene,x,y,noteNumber,accidental,ledgerLines,lineGap);
   }
   
   static random(scene,{
-    flats,
-    sharps,
+    flats=[],
+    sharps=[],
     minIndex=-11,
-    maxIndex=11
+    maxIndex=11,
+    lineGap=30,
+    clef="g",
+    lineThickness
   }={}) {
     
+    const clefAdjust = {g:0,f:2,c:1}[clef];
+    //alert(clef)
+    
     const index = Math.floor(Math.random()*(maxIndex-minIndex+1)+minIndex);
-    const accidental = Math.floor(Math.random()*3-1);
-    return Note.fromIndex(scene,index,accidental,flats,sharps);
+    
+    
+    
+    
+    let naturalIndex=index+clefAdjust;
+    while (naturalIndex<0)
+      naturalIndex+=7;
+    
+    const availableAcc = [0];
+    if (flats.includes(naturalIndex%7))
+      availableAcc.push(-1);
+    if (sharps.includes(naturalIndex%7))
+      availableAcc.push(1);
+    const accidental=availableAcc[Math.floor(Math.random()*availableAcc.length)]
+    
+    //index-=clefAdjust;
+      
+    return Note.fromIndex(scene,index,accidental,lineGap,lineThickness,clef);
+  }
+
+  dest() {
+    if (this.accidental)
+      this.accidental.destroy();
+    this.ledgerLines.forEach(line=>line.destroy())
+    this.destroy();
   }
   
-  destroy() {
-    if (this.accidental !== false) {
-      console.log("Amen!");
-      this.accidental.destroy();
-    }
-    console.log(this.ledgerLines);
-    //this.ledgerLines.forEach(line=>line.destroy())
+  setIndex(index) {
     for (const line of this.ledgerLines) {
-     line.destroy();
+      line.destroy()
     }
-    super.destroy();
+    const dy=lineGap*0.4833//14.5;
+    const y = scene.cameras.main.centerY-index*dy-dy*0.05;
+    this.y=y;
+    if (this.accidental) {
+      //won't work well with flats!
+      this.accidental.y=this.y
+    }
+  }
+  
+  setX(x) {
+    this.x =x;
+    if (this.accidental)
+      this.accidental.x =x;
+    for (const line of this.ledgerLines)
+      line.x=this.x;
+    return this
+
   }
   
   move(dx) {

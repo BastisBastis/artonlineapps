@@ -12,8 +12,8 @@ const PageContainer = () => {
   const local=true;
   
   const slStyle={
-    width:"20rem",
-  height:"15rem"
+    width:"100%",
+  //height:"15rem"
   }
   return (
     <>

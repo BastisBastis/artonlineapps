@@ -17,7 +17,7 @@ export default class GameOver extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('#bbbbff');
     this.add.text(
         cam.centerX, 
-        100, 
+        50, 
         "Spelet tog slut!", 
         { 
           font: "50px Arial", 
@@ -26,7 +26,7 @@ export default class GameOver extends Phaser.Scene {
       ).setOrigin(0.5,0.5);
     this.add.text(
         cam.centerX, 
-        200, 
+        125, 
         `Du fick ${data.points} poäng!`, 
         { 
           font: "40px Arial", 
@@ -34,23 +34,34 @@ export default class GameOver extends Phaser.Scene {
         }
       ).setOrigin(0.5,0.5);
       
-    try {
+    
     this.add.text(
         cam.centerX, 
-        cam.height-100, 
+        cam.height-125, 
         `Spela igen!`, 
         { 
           font: "40px Arial", 
           fill: "#ffffff" 
         }
       ).setOrigin(0.5,0.5).setInteractive().on("pointerdown",(e)=>{
-        this.restart();
+        this.restart(data.options);
       });
       
-    } catch (err) { alert(err)}
+    this.add.text(
+        cam.centerX, 
+        cam.height-50, 
+        `Huvudmeny`, 
+        { 
+          font: "40px Arial", 
+          fill: "#ffffff" 
+        }
+      ).setOrigin(0.5,0.5).setInteractive().on("pointerdown",(e)=>{
+        this.scene.start("menu",{options:data.options});
+      });
+    
   }
   
-  restart() {
-    this.scene.start("Game");
+  restart(options) {
+    this.scene.start("game",{options:options});
   }
 }
