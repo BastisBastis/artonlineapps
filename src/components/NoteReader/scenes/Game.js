@@ -138,9 +138,11 @@ export default class Game extends Phaser.Scene {
     this.lives--;
     this.displayLives();
     if (this.lives<=0) {
+
       
       this.scene.start("gameOver",{points:this.points,options:this.options})
       
+
     }
   }
   
@@ -149,8 +151,10 @@ export default class Game extends Phaser.Scene {
   }
   
   nextNote () {
+
     if (this.note)
       this.note.dest();
+
     try {
     this.note = Note.random(this,this.noteOptions);
     } catch (err) {alert(err)}
@@ -162,8 +166,8 @@ export default class Game extends Phaser.Scene {
     const dx = -speed*delta
     if (this.note) {
       if (this.note.x<this.killX) {
-        this.loseLife()
         this.nextNote();
+        this.loseLife()
       }
       this.note.move(dx);
     }

@@ -171,7 +171,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
       
     return Note.fromIndex(scene,index,accidental,lineGap,lineThickness,clef);
   }
-  
+
   dest() {
     if (this.accidental)
       this.accidental.destroy();
@@ -199,6 +199,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     for (const line of this.ledgerLines)
       line.x=this.x;
     return this
+
   }
   
   move(dx) {
