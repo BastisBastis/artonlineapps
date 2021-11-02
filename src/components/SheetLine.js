@@ -8,6 +8,7 @@ import { IonPhaser } from '@ion-phaser/react'
 //Game Scenes
 import Game from "./NoteReader/scenes/Game"
 import GameOver from "./NoteReader/scenes/GameOver"
+import Menu from "./NoteReader/scenes/Menu"
 
 //styles
 import styles from "./SheetLine.module.css"
@@ -31,6 +32,7 @@ const game = {
       autoCenter: Phaser.Scale.CENTER_BOTH
     },   
   scene: [
+    Menu,
     Game,
     GameOver
   ]

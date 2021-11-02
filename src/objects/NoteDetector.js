@@ -67,6 +67,7 @@ export default class NoteDetector {
     const cents=centsOffFromPitch(pitch,note)
   
     const noteName = notes[note%12];
+    //console.log(note)
     this.callback({
       note:noteName,
       noteNumber:note,
