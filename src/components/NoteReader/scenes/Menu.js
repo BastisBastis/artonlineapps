@@ -37,7 +37,8 @@ export default class Menu extends Phaser.Scene {
       flats:[0,3,6,2],
       minNote:-5,
       maxNote:5,
-      clef:"g"
+      clef:"g",
+      transposition:0
     }
     this.labels=[];
     
@@ -89,6 +90,10 @@ export default class Menu extends Phaser.Scene {
       {
         title:"Omfång",
         callback:()=>this.showMinMax()
+      },
+      {
+        title:"Transponering",
+        callback:()=>this.showTransposition()
       },
       {
         title:"Tillbaka",
@@ -236,6 +241,91 @@ export default class Menu extends Phaser.Scene {
     this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       topNote.dest();
       bottomNote.dest()
+      this.showSettings();
+    });
+  }
+  
+  showTransposition() {
+    this.clear();
+    const cam=this.cameras.main;
+    this.addLabel(cam.centerX,50,"Välj transponering",50);
+    
+    this.addLabel(cam.centerX-50,125,"Halvtoner:",40).setOrigin(1,0.5)
+    
+    const transLabel=this.addLabel(cam.centerX+50,125,this.options.transposition,40)
+    
+    const setTransposition=(trans) => {
+      this.options.transposition=trans;
+      transLabel.text=this.options.transposition;
+    }
+    
+    
+    
+    this.addLabel(cam.width-75,125,"+",75).setInteractive().on("pointerdown",()=>{
+      setTransposition(this.options.transposition+1)
+    })
+    this.addLabel(cam.width-150,120,"-",75).setInteractive().on("pointerdown",()=>{
+      setTransposition(this.options.transposition-1)
+    })
+    
+    
+    const instruments=[
+      {
+        title:"C-instrument",
+        transposition:0
+      },
+      {
+        title:"Klarinett",
+        transposition:2
+      },
+      {
+        title:"Trumpet",
+        transposition:2
+      },
+      {
+        title:"Valthorn",
+        transposition:7
+      },
+      {
+        title:"Altsaxofon",
+        transposition:9
+      },
+      
+      {
+        title:"Tenorsaxofon",
+        transposition:14
+      },
+      {
+        title:"Barytonsaxofon",
+        transposition:21
+      },
+      {
+        title:"Elbas",
+        transposition:12
+      },
+      {
+        title:"Gitarr",
+        transposition:12
+      }
+    ]
+    
+    
+    
+    const startY=200;
+    const dy=50;
+    const cols=3
+    const startX = cam.width/(cols*2);
+    const dx=startX*2
+    
+    for (const [i,inst] of Object.entries(instruments)) {
+      const row=Math.floor(i/cols)
+      const col=i%cols;
+      const instBtn = this.addLabel(startX+dx*col,startY+dy*row,inst.title,30).setInteractive().on("pointerdown",()=>setTransposition(inst.transposition))
+    }
+    
+    
+    
+    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       this.showSettings();
     });
   }

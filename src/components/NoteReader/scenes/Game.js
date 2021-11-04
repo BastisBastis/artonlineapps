@@ -85,7 +85,11 @@ export default class Game extends Phaser.Scene {
     this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"Fuska!", { 
           font: "40px Arial", 
           fill: "#ffffff" 
-        }).setInteractive().on("pointerdown",()=>this.cheat=true)
+        }).setOrigin(0.5,0.5).setInteractive().on("pointerdown",()=>this.cheat=true);
+    this.noteLabel=this.add.text(this.cameras.main.width-100,this.cameras.main.height-50,"?",{ 
+          font: "40px Arial", 
+          fill: "#ffffff" 
+        });
     
     //const clef = this.add.image(50,this.cameras.main.centerY,"gclef");
     //clef.setScale(0.2);
@@ -97,7 +101,8 @@ export default class Game extends Phaser.Scene {
       flats:data.options.flats || [0,3,6],
       sharps:data.options.sharps || [4,1,5],
       lineGap:29,
-      clef:data.options.clef || "g"
+      clef:data.options.clef || "g",
+      transposition:data.options.transposition || 0
     }
     this.nextNote();
     //this.note=Note.fromIndex(this,11,-1)
@@ -110,8 +115,8 @@ export default class Game extends Phaser.Scene {
   
   noteDetected(res) {
     //console.log(res.note)
-    if (this.pointsLabel!==undefined) {
-      //this.pointsLabel.text=res.note
+    if (this.noteLabel!==undefined) {
+      this.noteLabel.text=res.note
       //console.log("hm")
       }
     

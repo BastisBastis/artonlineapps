@@ -118,7 +118,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
   }
   
-  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g") {
+  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g", transposition=0) {
     
     const x=scene.cameras.main.width+30 + Math.abs(accidental)*30;
     const dy=lineGap*0.5//14.5;
@@ -129,7 +129,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     const clefAdjust = {g:0,f:-12,c:-6}[clef]
       
     //const realIndex=index*1+clefAdjust
-    const noteNumber = pitchIndex[Number(index) + clefAdjust]+accidental;
+    const noteNumber = pitchIndex[Number(index) + clefAdjust-transposition]+accidental;
     
     
     const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness);
@@ -145,11 +145,13 @@ export default class Note extends Phaser.GameObjects.Sprite {
     maxIndex=11,
     lineGap=30,
     clef="g",
-    lineThickness
+    lineThickness=2,
+    transposition=0
   }={}) {
     
     const clefAdjust = {g:0,f:2,c:1}[clef];
     //alert(clef)
+    
     
     const index = Math.floor(Math.random()*(maxIndex-minIndex+1)+minIndex);
     
@@ -169,7 +171,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
     //index-=clefAdjust;
       
-    return Note.fromIndex(scene,index,accidental,lineGap,lineThickness,clef);
+    return Note.fromIndex(scene,index,accidental,lineGap,lineThickness,clef,transposition);
   }
 
   dest() {
