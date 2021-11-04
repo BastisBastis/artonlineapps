@@ -25,6 +25,7 @@ export default class NoteDetector {
     }
     this.callback=callback;
     this.active=false;
+    this.context=false;
     this.startDetecting();
     oldDetector=this;
     
@@ -34,9 +35,16 @@ export default class NoteDetector {
     this.active=false;
   }
   
+  resumeContext() {
+    if (this.context) {
+      this.context.resume();
+    }
+  }
+  
   startDetecting() {
     this.active=true;
     const audioContext = new window.AudioContext();
+    this.context=audioContext;
     
     const analyserNode = audioContext.createAnalyser();
     

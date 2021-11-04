@@ -49,6 +49,9 @@ const SheetLine = () => {
   }
   
   const start=()=> {
+    if (noteDetector) {
+      noteDetector.resumeContext();
+    }
     game.callbacks={preBoot:(g)=>
       {
         console.log(g.scene)
