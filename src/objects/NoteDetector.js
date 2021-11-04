@@ -26,7 +26,7 @@ export default class NoteDetector {
     this.callback=callback;
     this.active=false;
     this.context=false;
-    this.startDetecting();
+    //this.startDetecting();
     oldDetector=this;
     
   }

@@ -50,7 +50,7 @@ const SheetLine = () => {
   
   const start=()=> {
     if (noteDetector) {
-      noteDetector.resumeContext();
+      noteDetector.startDetecting();
     }
     game.callbacks={preBoot:(g)=>
       {
