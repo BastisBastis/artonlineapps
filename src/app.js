@@ -6,7 +6,7 @@ import "./app.css"
 
 //Components
 import PageContainer from "./components/PageContainer"
-console.log("hipp")
+
 
 ReactDOM.render(
   <React.StrictMode>

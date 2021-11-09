@@ -18,6 +18,7 @@ import NoteDetector from "../../../objects/NoteDetector"
 
 console.error=console.log;
 
+
 export default class Game extends Phaser.Scene {
   constructor () {
     super("game");
@@ -38,7 +39,7 @@ export default class Game extends Phaser.Scene {
   }
   
   create (data={options:{}}) {
-    try {
+    //try {
     this.options=data.options;
     this.points=0;
     this.lives=3;
@@ -48,6 +49,9 @@ export default class Game extends Phaser.Scene {
     this.cheat = false;
     
     this.game.noteDetector.callback=(res)=>{this.noteDetected(res)};
+    //this.game.noteDetector.active=true;
+    if (!this.game.noteDetector.active)
+      this.game.noteDetector.startDetecting();
     
     this.cameras.main.setBackgroundColor('#bbbbff');
     this.pointsLabel = this.add.text(
@@ -85,16 +89,19 @@ export default class Game extends Phaser.Scene {
     this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"Fuska!", { 
           font: "40px Arial", 
           fill: "#ffffff" 
-        }).setOrigin(0.5,0.5).setInteractive().on("pointerdown",()=>this.cheat=true);
+        }).setOrigin(0.5,0.5).setInteractive().on("pointerdown",()=>this.cheat=true).setVisible(false);
     this.noteLabel=this.add.text(this.cameras.main.width-100,this.cameras.main.height-50,"?",{ 
           font: "40px Arial", 
           fill: "#ffffff" 
-        });
+        }).setVisible(false);;
     
     //const clef = this.add.image(50,this.cameras.main.centerY,"gclef");
     //clef.setScale(0.2);
     
     this.killX=170;
+    this.centTolerance= data.options.centTolerance || 50;
+    this.clarityTolerance= data.options.clarityTolerance || 0.95;
+    
     this.noteOptions={
       minIndex:data.options.minNote || -8,
       maxIndex:data.options.maxNote || 8,
@@ -102,25 +109,34 @@ export default class Game extends Phaser.Scene {
       sharps:data.options.sharps || [4,1,5],
       lineGap:29,
       clef:data.options.clef || "g",
-      transposition:data.options.transposition || 0
+      transposition:data.options.transposition || 0,
     }
     this.nextNote();
     //this.note=Note.fromIndex(this,11,-1)
     
     
     //this.noteDetector = new NoteDetector((res)=>{this.noteDetected(res)});
-    } catch (e) {alert(e)}
+    //} catch (e) {alert(e)}
 
   }
   
   noteDetected(res) {
     //console.log(res.note)
     if (this.noteLabel!==undefined) {
+      if (res.clarity>=this.clarityTolerance)
+        if (Math.abs(res.cents)<=this.centTolerance) {
+          this.noteLabel.setFill("#00ff00");
+        } else {
+          this.noteLabel.setFill("#ff0000");
+      } else {
+          this.noteLabel.setFill("#ffffff");
+      }
+      
       this.noteLabel.text=res.note
       //console.log("hm")
       }
     
-    if ((this.note && res.noteNumber==this.note.noteNumber) || this.cheat) {
+    if ((this.note && res.noteNumber==this.note.noteNumber && Math.abs(res.cents)<=this.centTolerance) || this.cheat) {
       this.addPoint();
       this.nextNote();
       this.cheat=false;
@@ -144,7 +160,7 @@ export default class Game extends Phaser.Scene {
     this.displayLives();
     if (this.lives<=0) {
 
-      
+      this.game.noteDetector.callback=()=>false;
       this.scene.start("gameOver",{points:this.points,options:this.options})
       
 

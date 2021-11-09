@@ -1,5 +1,6 @@
 import Phaser from "phaser"
 import React, { useState, useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
 import { IonPhaser } from '@ion-phaser/react'
 
 //Components
@@ -48,14 +49,56 @@ const SheetLine = () => {
     //console.log(results)
   }
   
+  const [searchParams, setSearchParams] = useSearchParams();
+  const options={
+    clef: searchParams.get("clef"),
+    sharps: searchParams.get("sharps"),
+    flats: searchParams.get("flats"),
+    maxNote: searchParams.get("maxNote"),
+    minNote: searchParams.get("minNote"),
+    tuning: searchParams.get("tuning"),
+    transposition: searchParams.get("transposition"),
+  }
+  //const clef = searchParams.get("clef");
+  
+  
+  
   const start=()=> {
     if (noteDetector) {
       noteDetector.startDetecting();
     }
     game.callbacks={preBoot:(g)=>
       {
-        console.log(g.scene)
-        g.noteDetector=noteDetector;}
+        g.noteDetector=noteDetector;
+        if (options && options.sharps) {
+          if (options.sharps<0)
+            options.sharps=[]
+          else {
+            
+            const sharps=[]
+            for (const s of options.sharps) {
+              sharps.push(Number(s))
+            }
+            
+            options.sharps=sharps
+            
+          }
+        }
+        if (options && options.flats) { 
+          if (options.flats<0)
+            options.flats=[]
+          else {
+            const flats=[]
+            for (const f of options.flats) {
+              flats.push(Number(f))
+            }
+            options.flats=flats
+            console.log(options.flats)
+          }
+        }
+        g.startOptions=options;
+      }
+        
     }
     setStarted(true);
   }
@@ -67,17 +110,33 @@ const SheetLine = () => {
     
   }
   
+  const slStyle={
+    width:"100%",
+  //height:"15rem"
+  }
+  
   if (started) {
     return (
-      
+      <div style={slStyle} id="sl">
         <IonPhaser game={game} />
-        
+      </div>
     );
   } else {
     return (
-      <div className={styles.gameContainer}>
-        <button onClick={start}>Starta</button>
-      </div>
+      <div style={slStyle} id="sl">
+        <div style={{
+          width:"100%",
+          height:0,
+          paddingTop:"20%",
+          paddingBottom:"20%",
+          
+          height:"3rem",
+          backgroundColor:"#bbbbff",
+          textAlign:"center",
+          color:"#ffffff",
+          fontSize:"2rem"
+        }} onClick={start}>Starta</div>
+    </div>
     )
   }
   

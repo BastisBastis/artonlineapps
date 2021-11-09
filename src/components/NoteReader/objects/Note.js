@@ -118,19 +118,21 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
   }
   
-  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g", transposition=0) {
+  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g", transposition=0,originY=false) {
+    originY = originY || scene.cameras.main.centerY;
     
     const x=scene.cameras.main.width+30 + Math.abs(accidental)*30;
     const dy=lineGap*0.5//14.5;
-    const y = scene.cameras.main.centerY-index*dy-dy*0.05;
+    const y = originY-index*dy-dy*0.05;
     
     //rewrite to only allow provided accidentsals in the random roll
     
     const clefAdjust = {g:0,f:-12,c:-6}[clef]
       
     //const realIndex=index*1+clefAdjust
-    const noteNumber = pitchIndex[Number(index) + clefAdjust-transposition]+accidental;
+    const noteNumber = pitchIndex[Number(index) + clefAdjust]+accidental-transposition;
     
+    console.log(transposition)
     
     const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness);
     
@@ -192,6 +194,14 @@ export default class Note extends Phaser.GameObjects.Sprite {
       //won't work well with flats!
       this.accidental.y=this.y
     }
+  }
+  
+  setVisible(value) {
+    if (this.accidental)
+      this.accidental.setVisible(value);
+    this.ledgerLines.forEach(line=>line.setVisible(value))
+    super.setVisible(value)
+    return this;
   }
   
   setX(x) {

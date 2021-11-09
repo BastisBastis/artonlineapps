@@ -42,6 +42,18 @@ export default class Staff {
     }
   }
   
+  setVisible(value) {
+    for (const line of this.lines) {
+      if (line) {
+        line.setVisible(value);
+      }
+    }
+    if (this.clef) {
+      this.clef.setVisible(value);
+    }
+    return this;
+  }
+  
   getLineGap() {
     const gap = this.height/4;
     console.log(gap)

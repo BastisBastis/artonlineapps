@@ -10,6 +10,7 @@ import GClefImage from "../assets/gclef.png"
 import FClefImage from "../assets/fclef.png"
 import CClefImage from "../assets/cclef.png"
 import NoteImage from "../assets/note.png"
+import ShareIcon from "../../../assets/images/share.png"
 
 export default class Menu extends Phaser.Scene {
   
@@ -25,21 +26,42 @@ export default class Menu extends Phaser.Scene {
     this.load.image("fclef", FClefImage);
     this.load.image("cclef", CClefImage);
     this.load.image("note", NoteImage);
+    this.load.image("share", ShareIcon);
     
     
   }
   
   create(data) {
+    
+    
+    //test
+    
+    console.log(this.game.noteDetector.offsetTuning(-5))
+    
+    
     const cam=this.cameras.main;
     cam.setBackgroundColor("#bbbbff")
-    this.options=data.options || {
+    
+    this.options=(data.options || this.game.startOptions) || {}
+    console.log(this.options)
+    
+    const defaultOptions = {
       sharps:[4,1,5,2],
       flats:[0,3,6,2],
       minNote:-5,
       maxNote:5,
       clef:"g",
-      transposition:0
+      transposition:0,
+      tuning:440,
     }
+    
+    for (const [key,val] of Object.entries(defaultOptions)) {
+      
+      if (this.options[key]===null || this.options[key]===undefined) {
+        this.options[key]=val
+      }
+    }
+    
     this.labels=[];
     
     this.showMain();
@@ -96,6 +118,10 @@ export default class Menu extends Phaser.Scene {
         callback:()=>this.showTransposition()
       },
       {
+        title:"Stämning",
+        callback:()=>this.showTuning()
+      },
+      {
         title:"Tillbaka",
         callback:()=>this.showMain()
       },
@@ -106,6 +132,11 @@ export default class Menu extends Phaser.Scene {
     for (const [i,btn] of Object.entries(buttons)) {
       this.addLabel(cam.centerX,startY+dy*i,btn.title,40).setInteractive().on("pointerdown", ()=>btn.callback())
     }
+    
+    const shareIcon = this.add.image(cam.width-50,50,"share").setScale(0.03).setTintFill(0xffffff).setInteractive().on("pointerdown",()=>{
+      this.share();
+    });
+    this.labels.push(shareIcon);
   }
   
   showAccidentals() {
@@ -117,31 +148,33 @@ export default class Menu extends Phaser.Scene {
     
     
     const sharpNames=[
-      {i:4,name:"F#"},
-      {i:1,name:"C#"},
-      {i:5,name:"G#"},
-      {i:2,name:"D#"},
-      {i:6,name:"A#"},
-      {i:3,name:"E#"},
-      {i:0,name:"B#"}];
+      {i:4,name:"F"},
+      {i:1,name:"C"},
+      {i:5,name:"G"},
+      {i:2,name:"D"},
+      {i:6,name:"A"},
+      {i:3,name:"E"},
+      {i:0,name:"B"}];
     const flatNames=[
-      {i:0,name:"Bb"},
-      {i:3,name:"Eb"},
-      {i:6,name:"Ab"},
-      {i:2,name:"Db"},
-      {i:5,name:"Gb"},
-      {i:1,name:"Cb"},
-      {i:4,name:"Fb"}];
+      {i:0,name:"B"},
+      {i:3,name:"E"},
+      {i:6,name:"A"},
+      {i:2,name:"D"},
+      {i:5,name:"G"},
+      {i:1,name:"C"},
+      {i:4,name:"F"}];
       
-      const toggleAccidental=(label,i,collection)=>{
+      const toggleAccidental=(label,acc,i,collection)=>{
         if (collection.includes(i)) {
           const index=collection.indexOf(i);
           collection.splice(index,1);
-          label.setFill("#888888")
+          label.setFill("#888888");
+          acc.setFill("#888888");
         }
         else {
           collection.push(i);
           label.setFill("#ffffff")
+          acc.setFill("#ffffff")
         }
       }
     
@@ -150,13 +183,18 @@ export default class Menu extends Phaser.Scene {
       const x=dx*(i+0.5);
       const y=150;
       const size=40;
+      const accSize=30
       
       const toggled=this.options.sharps.includes(sharp.i);
       const color = toggled ? "#ffffff" : "#888888";
       
-      const label=this.addLabel(x,y,sharp.name,size,color);
+      const label=this.addLabel(x-12,y,sharp.name,size,color);
+      const acc=this.addLabel(x+12,y-10,"♯",accSize,color)
       label.setInteractive().on("pointerdown",()=> {
-        toggleAccidental(label,sharp.i,this.options.sharps)
+        toggleAccidental(label,acc,sharp.i,this.options.sharps)
+      })
+      acc.setInteractive().on("pointerdown",()=> {
+        toggleAccidental(label,acc,sharp.i,this.options.sharps)
       })
     }
     
@@ -165,13 +203,18 @@ export default class Menu extends Phaser.Scene {
       const x=dx*(i+0.5);
       const y=250;
       const size=40;
+      const accSize=30
       
       const toggled=this.options.flats.includes(flat.i);
       const color = toggled ? "#ffffff" : "#888888";
       
-      const label=this.addLabel(x,y,flat.name,size,color);
+      const label=this.addLabel(x-12,y,flat.name,size,color);
+      const acc=this.addLabel(x+12,y-10,"♭",accSize,color)
       label.setInteractive().on("pointerdown",()=> {
-        toggleAccidental(label,flat.i,this.options.flats)
+        toggleAccidental(label,acc,flat.i,this.options.flats)
+      })
+      acc.setInteractive().on("pointerdown",()=> {
+        toggleAccidental(label,acc,flat.i,this.options.flats)
       })
     }
   }
@@ -328,6 +371,138 @@ export default class Menu extends Phaser.Scene {
     this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       this.showSettings();
     });
+  }
+  
+  showTuning() {
+    this.clear();
+    const cam=this.cameras.main;
+    this.addLabel(cam.centerX,50,"Välj stämning",50);
+    
+    this.addLabel(cam.width/4,125,"A:",40).setOrigin(1,0.5)
+    
+    
+    const tuneLabel = this.addLabel(cam.centerX,125,this.options.tuning,40)
+    
+    this.addLabel(cam.width-75,125,"+",75).setInteractive().on("pointerdown",()=>{
+      setTuning(this.options.tuning+1)
+    })
+    this.addLabel(cam.width-150,120,"-",75).setInteractive().on("pointerdown",()=>{
+      setTuning(this.options.tuning-1)
+    })
+    
+    const setTuning=(tuning) => {
+      this.options.tuning=tuning;
+      tuneLabel.text=this.options.tuning;
+    }
+    
+    const calibrateLabel = this.addLabel(cam.centerX,cam.centerY,"Kalibrera",40).setInteractive();
+    
+    const calibrateInstruction = this.addLabel(cam.width/4,cam.height*0.6,"Spela:",40).setVisible(false);
+    
+    const staff = new Staff(this,cam.width*0.6,cam.height*0.6,200,50,this.options.clef,1).setVisible(false);
+    this.labels.push(staff);
+    
+    const noteIndex= Math.floor((this.options.maxNote-this.options.minNote)/2+this.options.minNote)
+    
+    const note= Note.fromIndex(this,noteIndex,0,staff.getLineGap(),1,this.options.clef, this.options.transposition, cam.height*0.6).setX(cam.width*0.6).setVisible(false);
+    
+    
+    let showCalibrateLabel;
+    let startCalibration;
+    let stopCalibration;
+    
+    startCalibration= () => {
+      calibrateInstruction.setVisible(true)
+      staff.setVisible(true)
+      note.setVisible(true);
+      
+      const calibrationData=[];
+      const recieveData=res=>{
+        if (res && res.clarity>0.95) {
+          const cents = (res.noteNumber - note.noteNumber)*100 + res.cents
+          calibrationData.push(cents);
+          if (calibrationData.length>10) {
+            calibrationData.sort((a,b)=>a-b)
+            console.log(calibrationData)
+            const result = calibrationData[Math.floor(calibrationData.length/2)];
+            stopCalibration(result)
+          }
+        }
+      }
+      this.game.noteDetector.callback=res=>recieveData(res);
+      
+    }
+    
+    stopCalibration = result => {
+      this.game.noteDetector.callback=()=>false;
+      if (result) {
+        const tuning = this.game.noteDetector.offsetTuning(result)
+        this.options.tuning=Math.round(tuning);
+        tuneLabel.text=this.options.tuning;
+      }
+      calibrateInstruction.setVisible(false)
+      staff.setVisible(false)
+      note.setVisible(false)
+      showCalibrateLabel()
+    }
+    
+    showCalibrateLabel = () => {
+      
+      calibrateLabel.on("pointerdown",()=>{
+       calibrateLabel.on("pointerdown",()=>false);
+       calibrateLabel.setVisible(false);
+       startCalibration();
+      })
+      calibrateLabel.setVisible(true)
+    }
+    showCalibrateLabel();
+    
+    
+    
+    
+    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+      note.dest()
+      this.showSettings();
+    });
+  }
+  
+  share() {
+    /*
+    const defaultOptions = {
+      sharps:[4,1,5,2],
+      flats:[0,3,6,2],
+      minNote:-5,
+      maxNote:5,
+      clef:"g",
+      transposition:0,
+      tuning:440,
+    }
+    */
+    try {
+    let url=window.location.href.split("?")[0]
+      url+="?clef="+this.options.clef;
+      url+=`&maxNote=${this.options.maxNote}&minNote=${this.options.minNote}`;
+      let sharps="&sharps=";
+      let flats="&flats=";
+      
+      if (this.options.sharps.length>0) {
+        this.options.sharps.forEach(i=>sharps+=i)
+      } else {
+        sharps+="-1";
+      }
+      if (this.options.flats.length>0) {
+        this.options.flats.forEach(i=>flats+=i)
+      } else {
+        flats+="-1";
+      }
+      url+=sharps+flats;
+      
+      url+="&transposition="+this.options.transposition;
+      url+="&tuning="+this.options.tuning
+      
+      prompt("Länk till spelet med nuvarande inställningar:",url)
+      
+      } catch (e) { alert(e)}
   }
   
   start() {
