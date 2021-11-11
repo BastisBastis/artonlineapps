@@ -2,6 +2,8 @@ import Phaser from "phaser"
 import React, { useState, useEffect } from "react"
 import { useSearchParams } from "react-router-dom"
 import { IonPhaser } from '@ion-phaser/react'
+import WebFontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugin.js';
+
 
 //Components
 
@@ -36,7 +38,16 @@ const game = {
     Menu,
     Game,
     GameOver
-  ]
+  ],
+  plugins: {
+        global: [{
+            key: 'rexWebFontLoader',
+            plugin: WebFontLoaderPlugin,
+            start: true
+        },
+        // ...
+        ]
+    }
     
 }
 

@@ -10,6 +10,7 @@
     "express": "4.16.x",
     "file-loader": "^4.0.0",
     "phaser": "^3.55.2",
+    "phaser3-rex-plugins": "^1.1.63",
     "pitchy": "^2.1.0",
     "react": "16.x.x",
     "react-dom": "16.x.x",

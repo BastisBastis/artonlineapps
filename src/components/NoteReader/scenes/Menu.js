@@ -35,6 +35,20 @@ export default class Menu extends Phaser.Scene {
     this.load.image("share", ShareIcon);
     this.load.image("paper", PaperImage);
     
+    
+    var config = {
+            google: {
+                families: ['Exo']
+            }
+        };
+        this.load.rexWebFont(config);
+        this.load.on('webfontactive', function (fileObj, familyName) {
+            console.log('font-active: ' + familyName)
+        });
+        this.load.on('webfontinactive', function (fileObj, familyName) {
+            console.log('font-inactive: ' + familyName)
+        })
+    
   }
   
   create(data) {
@@ -86,7 +100,9 @@ export default class Menu extends Phaser.Scene {
         y, 
         text, 
         { 
-          font: size+"px "+font, 
+          fontFamily: 'Exo',
+            fontSize: size+'px',
+          //font: size+"px "+font, 
           fill: color 
         }
       );
@@ -369,7 +385,7 @@ export default class Menu extends Phaser.Scene {
     for (const [i,inst] of Object.entries(instruments)) {
       const row=Math.floor(i/cols)
       const col=i%cols;
-      const instBtn = this.addLabel(startX+dx*col,startY+dy*row,inst.title,30).setInteractive().on("pointerdown",()=>setTransposition(inst.transposition))
+      const instBtn = this.addLabel(startX+dx*col,startY+dy*row,inst.title,26).setInteractive().on("pointerdown",()=>setTransposition(inst.transposition))
     }
     
     
