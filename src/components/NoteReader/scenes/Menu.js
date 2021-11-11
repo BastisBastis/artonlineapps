@@ -153,7 +153,9 @@ export default class Menu extends Phaser.Scene {
     const dy=cam.height/buttons.length;
     for (const [i,btn] of Object.entries(buttons)) {
       this.addLabel(cam.centerX,startY+dy*i,btn.title,40).setInteractive().on("pointerdown", ()=>btn.callback())
+      
     }
+    
     
     const shareIcon = this.add.image(cam.width-50,50,"share").setScale(0.03).setTintFill(fontColorNum).setInteractive().on("pointerdown",()=>{
       this.share();
@@ -166,7 +168,7 @@ export default class Menu extends Phaser.Scene {
     const cam=this.cameras.main;
     
     this.addLabel(cam.centerX,50,"Välj förtecken",50);
-    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>this.showSettings())
+    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>this.showSettings())
     
     
     const sharpNames=[
@@ -303,7 +305,7 @@ export default class Menu extends Phaser.Scene {
       
     })
    
-    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       topNote.dest();
       bottomNote.dest()
       this.showSettings();
@@ -390,7 +392,7 @@ export default class Menu extends Phaser.Scene {
     
     
     
-    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       this.showSettings();
     });
   }
@@ -482,7 +484,7 @@ export default class Menu extends Phaser.Scene {
     
     
     
-    this.addLabel(cam.centerX,cam.height-50,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       note.dest()
       this.showSettings();
     });
