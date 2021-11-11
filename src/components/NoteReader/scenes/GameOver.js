@@ -1,5 +1,5 @@
 import Phaser from "phaser"
-import PaperImage from "../assets/paper.jpg"
+import PaperImage from "../assets/paper2.jpg"
 
 const fontColor = "#454545"
 const fontColorNum = 0x454545;

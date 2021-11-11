@@ -12,7 +12,7 @@ import CClefImage from "../assets/cclef.png"
 import NoteImage from "../assets/note.png"
 import FlatImage from "../assets/flat.png"
 import SharpImage from "../assets/sharp.png"
-import PaperImage from "../assets/paper.jpg"
+import PaperImage from "../assets/paper2.jpg"
 
 
 

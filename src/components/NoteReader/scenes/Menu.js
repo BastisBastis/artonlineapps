@@ -11,7 +11,7 @@ import FClefImage from "../assets/fclef.png"
 import CClefImage from "../assets/cclef.png"
 import NoteImage from "../assets/note.png"
 import ShareIcon from "../../../assets/images/share.png"
-import PaperImage from "../assets/paper.jpg"
+import PaperImage from "../assets/paper2.jpg"
 
 const fontColor = "#454545"
 const fontColorNum = 0x454545;
