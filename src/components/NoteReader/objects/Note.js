@@ -45,12 +45,14 @@ const pitchIndex= {
 }
 
 export default class Note extends Phaser.GameObjects.Sprite {
-  constructor(scene,x,y,noteNumber,accidental,ledgerLines,lineGap) {
+  constructor(scene,x,y,noteNumber,accidental,ledgerLines,lineGap,color) {
     super(scene,x,y,"note");
     try {
     this.scale=lineGap*0.26/30;
     this.noteNumber=noteNumber;
     this.scene=scene;
+    this.setTintFill(color)
+    this.color=color;
     console.log(noteNumber)
     
     scene.add.existing(this);
@@ -85,13 +87,14 @@ export default class Note extends Phaser.GameObjects.Sprite {
         accidentalData.texture
         );
       accidental.setScale(accidentalData.scale);
+      accidental.setTintFill(this.color)
         return accidental
     }
     return false;
     
   }
   
-  static getLedgerLines(scene, x,index,lineGap=29,lineThickness=2) {
+  static getLedgerLines(scene, x,index,lineGap=29,lineThickness=2,color=0x000000) {
     const f= lineGap/29;
     
     const w = 50*f;
@@ -102,7 +105,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     const lines =[];
     for (let i = 6; i<=index; i+=2) {
       const y = scene.cameras.main.centerY-dy*i;
-      const line = scene.add.line(x,y,-w/2-extra,0,w/2+extra,0,0x000000,1).setOrigin(0.0,0.5);
+      const line = scene.add.line(x,y,-w/2-extra,0,w/2+extra,0,color,1).setOrigin(0.0,0.5);
       line.setLineWidth(thickness)
       lines.push(line)
     }
@@ -118,7 +121,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
   }
   
-  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g", transposition=0,originY=false) {
+  static fromIndex(scene,index,accidental,lineGap,lineThickness=2,clef="g", transposition=0,originY=false,color=0x454545) {
     originY = originY || scene.cameras.main.centerY;
     
     const x=scene.cameras.main.width+30 + Math.abs(accidental)*30;
@@ -134,10 +137,10 @@ export default class Note extends Phaser.GameObjects.Sprite {
     
     console.log(transposition)
     
-    const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness);
+    const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness,color);
     
     
-    return new Note(scene,x,y,noteNumber,accidental,ledgerLines,lineGap);
+    return new Note(scene,x,y,noteNumber,accidental,ledgerLines,lineGap,color);
   }
   
   static random(scene,{

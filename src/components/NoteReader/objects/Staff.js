@@ -1,17 +1,18 @@
 import Phaser from "phaser"
 
 export default class Staff {
-  constructor (scene,x,y,width,height,clef="g",thickness=2) {
+  constructor (scene,x,y,width,height,clef="g",thickness=2,color=0x454545) {
     this.scene=scene;
     this.x=x;
     this.width=width;
     this.y=y;
     this.height=height;
     this.lines=[];
+    this.color=color
     for (let i =0; i<5; i++) {
       const lineY = y-height/2+(height/4)*i
       try {
-      const line=scene.add.line(x,lineY,0,0,width,0,0x000000,1).setLineWidth(thickness).setOrigin(0.5,0.5);
+      const line=scene.add.line(x,lineY,0,0,width,0,color,1).setLineWidth(thickness).setOrigin(0.5,0.5);
       this.lines.push(line);
       } catch (e) {alert(e)}
     }
@@ -28,7 +29,7 @@ export default class Staff {
     
     const clefScale={g:(this.height*2)/this.clef.height,f:this.height/this.clef.height, c:this.height/this.clef.height}[clef] || 1;
     this.clef.setScale(clefScale);
-    
+    this.clef.setTintFill(this.color)
   }
   
   destroy() {

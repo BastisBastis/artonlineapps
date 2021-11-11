@@ -12,12 +12,17 @@ import CClefImage from "../assets/cclef.png"
 import NoteImage from "../assets/note.png"
 import FlatImage from "../assets/flat.png"
 import SharpImage from "../assets/sharp.png"
+import PaperImage from "../assets/paper.jpg"
+
+
 
 //Libraries and stuff
 import NoteDetector from "../../../objects/NoteDetector"
 
 console.error=console.log;
 
+const fontColor = "#454545"
+const fontColorNum = 0x454545;
 
 export default class Game extends Phaser.Scene {
   constructor () {
@@ -35,6 +40,7 @@ export default class Game extends Phaser.Scene {
     this.load.image("note", NoteImage);
     this.load.image("sharp", SharpImage);
     this.load.image("flat", FlatImage);
+    this.load.image("paper", PaperImage);
     
   }
   
@@ -54,13 +60,14 @@ export default class Game extends Phaser.Scene {
       this.game.noteDetector.startDetecting();
     
     this.cameras.main.setBackgroundColor('#bbbbff');
+    this.add.image(0,0,"paper").setOrigin(0,0)
     this.pointsLabel = this.add.text(
         this.cameras.main.width*1/4, 
         20, 
         "Poäng: "+this.points, 
         { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       );
     this.livesLabel = this.add.text(
@@ -69,7 +76,7 @@ export default class Game extends Phaser.Scene {
         "",
         { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       );
     this.displayLives()

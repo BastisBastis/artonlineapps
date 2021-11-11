@@ -11,6 +11,12 @@ import FClefImage from "../assets/fclef.png"
 import CClefImage from "../assets/cclef.png"
 import NoteImage from "../assets/note.png"
 import ShareIcon from "../../../assets/images/share.png"
+import PaperImage from "../assets/paper.jpg"
+
+const fontColor = "#454545"
+const fontColorNum = 0x454545;
+const fontColorDeselected = "#ababab"
+const font= "Segoe UI"
 
 export default class Menu extends Phaser.Scene {
   
@@ -27,7 +33,7 @@ export default class Menu extends Phaser.Scene {
     this.load.image("cclef", CClefImage);
     this.load.image("note", NoteImage);
     this.load.image("share", ShareIcon);
-    
+    this.load.image("paper", PaperImage);
     
   }
   
@@ -36,11 +42,11 @@ export default class Menu extends Phaser.Scene {
     
     //test
     
-    console.log(this.game.noteDetector.offsetTuning(-5))
     
     
     const cam=this.cameras.main;
     cam.setBackgroundColor("#bbbbff")
+    this.add.image(0,0,"paper").setOrigin(0,0)
     
     this.options=(data.options || this.game.startOptions) || {}
     console.log(this.options)
@@ -74,13 +80,13 @@ export default class Menu extends Phaser.Scene {
     this.labels=[];
   }
   
-  addLabel(x,y,text,size, color="#ffffff") {
+  addLabel(x,y,text,size, color=fontColor) {
     const label = this.add.text(
         x, 
         y, 
         text, 
         { 
-          font: size+"px Arial", 
+          font: size+"px "+font, 
           fill: color 
         }
       );
@@ -93,7 +99,7 @@ export default class Menu extends Phaser.Scene {
     this.clear();
     const cam=this.cameras.main;
     
-    this.addLabel(cam.centerX,cam.height/4,"Pricka Noten",60);
+    this.addLabel(cam.centerX,cam.height/4,"Pricka Noten",80);
     
     this.addLabel(cam.centerX,cam.centerY,"Spela",50).setInteractive().on("pointerdown",()=>this.start())
     
@@ -133,7 +139,7 @@ export default class Menu extends Phaser.Scene {
       this.addLabel(cam.centerX,startY+dy*i,btn.title,40).setInteractive().on("pointerdown", ()=>btn.callback())
     }
     
-    const shareIcon = this.add.image(cam.width-50,50,"share").setScale(0.03).setTintFill(0xffffff).setInteractive().on("pointerdown",()=>{
+    const shareIcon = this.add.image(cam.width-50,50,"share").setScale(0.03).setTintFill(fontColorNum).setInteractive().on("pointerdown",()=>{
       this.share();
     });
     this.labels.push(shareIcon);
@@ -168,13 +174,13 @@ export default class Menu extends Phaser.Scene {
         if (collection.includes(i)) {
           const index=collection.indexOf(i);
           collection.splice(index,1);
-          label.setFill("#888888");
-          acc.setFill("#888888");
+          label.setFill(fontColorDeselected);
+          acc.setFill(fontColorDeselected);
         }
         else {
           collection.push(i);
-          label.setFill("#ffffff")
-          acc.setFill("#ffffff")
+          label.setFill(fontColor)
+          acc.setFill(fontColor)
         }
       }
     
@@ -186,7 +192,7 @@ export default class Menu extends Phaser.Scene {
       const accSize=30
       
       const toggled=this.options.sharps.includes(sharp.i);
-      const color = toggled ? "#ffffff" : "#888888";
+      const color = toggled ? fontColor : fontColorDeselected;
       
       const label=this.addLabel(x-12,y,sharp.name,size,color);
       const acc=this.addLabel(x+12,y-10,"♯",accSize,color)
@@ -206,7 +212,7 @@ export default class Menu extends Phaser.Scene {
       const accSize=30
       
       const toggled=this.options.flats.includes(flat.i);
-      const color = toggled ? "#ffffff" : "#888888";
+      const color = toggled ? fontColor : fontColorDeselected;
       
       const label=this.addLabel(x-12,y,flat.name,size,color);
       const acc=this.addLabel(x+12,y-10,"♭",accSize,color)
@@ -235,23 +241,23 @@ export default class Menu extends Phaser.Scene {
     const gclefBtn = this.add.image(clefX,cam.centerY-clefDY,"gclef").setScale(0.07).setInteractive().on("pointerdown",()=>{
       staff.setClef("g")
       this.options.clef="g"
-    })
+    }).setTintFill(fontColorNum)
    
     const cclefBtn = this.add.image(clefX,cam.centerY,"cclef").setScale(0.3).setInteractive().on("pointerdown",()=>{
       staff.setClef("c")
       this.options.clef="c"
-    })
+    }).setTintFill(fontColorNum)
     
     const fclefBtn = this.add.image(clefX,cam.centerY+clefDY,"fclef").setScale(0.04).setInteractive().on("pointerdown",()=>{
       staff.setClef("f")
       this.options.clef="f"
-    })
+    }).setTintFill(fontColorNum)
     
     for (const c of [gclefBtn,cclefBtn,fclefBtn]) {
       this.labels.push(c);
     }
    
-    let topNote= Note.fromIndex(this,this.options.maxNote,0,staff.getLineGap(),1).setX(cam.centerX);
+    let topNote= Note.fromIndex(this,this.options.maxNote,0,staff.getLineGap(),1,false).setX(cam.centerX);
 
     
     let bottomNote= Note.fromIndex(this,this.options.minNote,0,staff.getLineGap(),1).setX(cam.centerX);

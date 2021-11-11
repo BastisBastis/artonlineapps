@@ -1,4 +1,8 @@
 import Phaser from "phaser"
+import PaperImage from "../assets/paper.jpg"
+
+const fontColor = "#454545"
+const fontColorNum = 0x454545;
 
 console.error=console.log;
 
@@ -11,7 +15,7 @@ export default class GameOver extends Phaser.Scene {
     this.game.noteDetector.active=false;
     
     const cam=this.cameras.main;
-    
+    this.add.image(0,0,"paper").setOrigin(0,0)
     
     
     this.cameras.main.setBackgroundColor('#bbbbff');
@@ -21,7 +25,7 @@ export default class GameOver extends Phaser.Scene {
         "Spelet tog slut!", 
         { 
           font: "50px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       ).setOrigin(0.5,0.5);
     this.add.text(
@@ -30,7 +34,7 @@ export default class GameOver extends Phaser.Scene {
         `Du fick ${data.points} poäng!`, 
         { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       ).setOrigin(0.5,0.5);
       
@@ -41,7 +45,7 @@ export default class GameOver extends Phaser.Scene {
         `Spela igen!`, 
         { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       ).setOrigin(0.5,0.5).setInteractive().on("pointerdown",(e)=>{
         this.restart(data.options);
@@ -53,7 +57,7 @@ export default class GameOver extends Phaser.Scene {
         `Huvudmeny`, 
         { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor 
         }
       ).setOrigin(0.5,0.5).setInteractive().on("pointerdown",(e)=>{
         this.scene.start("menu",{options:data.options});
