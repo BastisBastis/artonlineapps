@@ -21,14 +21,18 @@ function centsOffFromPitch( frequency, note , tuning=440) {
 }
 
 export default class NoteDetector {
-  constructor (callback) {
+  constructor (callback,autostart=false) {
     if (oldDetector) {
       oldDetector.active=false;
     }
+    console.log("cobstruct")
     this.callback=callback;
     this.active=false;
     this.context=false;
     this.tuning=440
+    if (autostart) {
+      this.startDetecting();
+    }
     //this.startDetecting();
     oldDetector=this;
     
@@ -50,6 +54,7 @@ export default class NoteDetector {
   }
   
   startDetecting() {
+    console.log('start')
     this.active=true;
     const audioContext = new window.AudioContext();
     this.context=audioContext;

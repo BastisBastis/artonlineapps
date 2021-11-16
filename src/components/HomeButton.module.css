@@ -1,0 +1,10 @@
+.container {
+  width:2rem;
+  height:2rem;
+  position:absolute;
+  top:1rem;
+  left:1rem;
+  background:red;
+  -webkit-mask:url("https://i.ibb.co/FhZb3Xs/CJcLK.png") center/contain;
+          mask:url("https://i.ibb.co/FhZb3Xs/CJcLK.png") center/contain;
+}

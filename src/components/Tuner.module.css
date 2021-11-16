@@ -1,10 +1,15 @@
+.container {
+  
+}
+
 .tuner {
   width:8rem;
   font-size:1.25rem;
-  background-color:grey;
+  background-color:#fff;
   text-align: center;
   border: 2px solid black;
   border-radius:0.75rem;
+  margin:1rem auto;
 }
 
 .indicator {
@@ -13,6 +18,4 @@
   background-color:red;
   position:relative;
   margin: 0 auto;
-  
-  
 }

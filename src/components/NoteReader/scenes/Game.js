@@ -84,13 +84,7 @@ export default class Game extends Phaser.Scene {
       
     this.staffHeight=this.cameras.main.height*0.3
     
-    //const bg = this.add.image(this.cameras.main.centerX,this.cameras.main.centerY,"staff");
-    
-    //const scaleX = this.cameras.main.width / bg.width
-    //const scaleY = this.staffHeight / bg.height
-    
-    //bg.setScale(scaleX,scaleY)
-    
+
     const staff = new Staff(this,this.cameras.main.centerX,this.cameras.main.centerY,this.cameras.main.width,this.staffHeight,data.options.clef)
     
     this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"Fuska!", { 
@@ -110,14 +104,16 @@ export default class Game extends Phaser.Scene {
     this.clarityTolerance= data.options.clarityTolerance || 0.95;
     
     this.noteOptions={
-      minIndex:data.options.minNote || -8,
-      maxIndex:data.options.maxNote || 8,
+      minIndex:!isNaN(data.options.minNote)? data.options.minNote : -8,
+      maxIndex:!isNaN(data.options.maxNote)? data.options.maxNote : 8,
       flats:data.options.flats || [0,3,6],
       sharps:data.options.sharps || [4,1,5],
       lineGap:29,
       clef:data.options.clef || "g",
       transposition:data.options.transposition || 0,
     }
+    
+    console.log(this.noteOptions.maxIndex)
     this.nextNote();
     //this.note=Note.fromIndex(this,11,-1)
     

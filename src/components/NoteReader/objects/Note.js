@@ -53,7 +53,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     this.scene=scene;
     this.setTintFill(color)
     this.color=color;
-    console.log(noteNumber)
+    //console.log(noteNumber)
     
     scene.add.existing(this);
     
@@ -135,7 +135,7 @@ export default class Note extends Phaser.GameObjects.Sprite {
     //const realIndex=index*1+clefAdjust
     const noteNumber = pitchIndex[Number(index) + clefAdjust]+accidental-transposition;
     
-    console.log(transposition)
+    //console.log(transposition)
     
     const ledgerLines=Note.getLedgerLines(scene,x,index,lineGap,lineThickness,color);
     

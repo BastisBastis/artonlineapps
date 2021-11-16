@@ -2,6 +2,7 @@ import React, { useState, useEffect }from "react"
 
 
 //Components
+import HomeButton from "./HomeButton"
  
 
 //Objects
@@ -23,6 +24,7 @@ const Tuner = () => {
     
   
   const setParameters=(results)=> {
+    //console.log(results)
     setNote(results.note);
     setCents(results.cents);
   }
@@ -35,10 +37,26 @@ const Tuner = () => {
     
   }
   
+  
   if (!noteDetector) {
-    setNoteDetector(new NoteDetector((res)=>{setParameters(res)}));
+    setNoteDetector(new NoteDetector((res)=>{setParameters(res)},true));
     //startNoteDetector()
   }
+  
+  
+  
+  useEffect(()=>{
+    console.log("use")
+    if (false && noteDetector)
+      noteDetector.startDetecting()
+  },[noteDetector])
+  
+  /*
+  
+  useEffect(()=>{
+    setNoteDetector(new NoteDetector((res)=>{setParameters(res)},true));
+  },[])
+  */
   
   const indicatorStyle={
     left:(width/100)*cents+"px"
@@ -46,6 +64,7 @@ const Tuner = () => {
   
   return (
     <div id="tuner" className={styles.tuner}>
+      <HomeButton/>
       <div>{note||""}</div>
       <div className={styles.indicator} style={indicatorStyle}></div>
     </div> 

@@ -4,41 +4,28 @@ import { BrowserRouter as Router, Link, Routes, Route, useParams } from "react-r
 
 
 //Components
+import Home from "./Home"
 import Tuner from "./Tuner"
 import SheetLine from "./SheetLine"
-
+import Smart from "./Smart"
+import PitchyBird from "./PitchyBird"
 
 
 const PageContainer = () => {
   
-  const local=true;
   
-  const slStyle={
-    width:"100%",
-  //height:"15rem"
-  }
   
   return (
     <Router>
     <Routes>
-      
+        <Route path="/" element={ < Home /> } />
         <Route path="/tuner" element={ < Tuner /> } />
-        <Route path="/" element={< SheetLine />} />
-      
+        <Route path="/notereader" element={< SheetLine />} />
+        <Route path="/smart" element={< Smart />} />
+        <Route path="/pitchy" element={< PitchyBird />} />
     </Routes>
-    <div>
-      <h1>Verktyg och spel</h1>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/tuner">Tuner</Link>
-          </li>
-          <li>
-            <Link to="/">Pricka Noten</Link>
-          </li>
-        </ul>
-      </nav>
-    </div>
+    
+    
     </Router>
   );
   

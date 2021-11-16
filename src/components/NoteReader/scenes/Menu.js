@@ -531,6 +531,7 @@ export default class Menu extends Phaser.Scene {
   
   start() {
     try {
+      console.log(this.options.maxNote)
     this.scene.start("game",{options:this.options})
     } catch (e) {alert(e)}
   }

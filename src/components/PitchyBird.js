@@ -11,15 +11,17 @@ import WebFontLoaderPlugin from 'phaser3-rex-plugins/plugins/webfontloader-plugi
 import HomeButton from "./HomeButton"
 
 //Game Scenes
-import Game from "./NoteReader/scenes/Game"
-import GameOver from "./NoteReader/scenes/GameOver"
-import Menu from "./NoteReader/scenes/Menu"
+import Game from "./Pitchy/scenes/Game"
+import GameOver from "./Pitchy/scenes/GameOver"
+//import GameOver from "./NoteReader/scenes/GameOver"
+//import Menu from "./NoteReader/scenes/Menu"
 
 //styles
 import styles from "./SheetLine.module.css"
 
 //Objects
 import NoteDetector from "../objects/NoteDetector"
+
 
 
 const game = {
@@ -29,6 +31,14 @@ const game = {
   audio: {
     noAudio: true
   },
+  physics: {
+		default: 'arcade',
+		arcade: {
+			gravity: { y: 300 },
+			debug:false
+		},
+		
+	},
   scale: {
     parent:"sl",
       width: 600,
@@ -37,7 +47,6 @@ const game = {
       autoCenter: Phaser.Scale.CENTER_BOTH
     },   
   scene: [
-    Menu,
     Game,
     GameOver
   ],
@@ -54,25 +63,9 @@ const game = {
 }
 
 
-const SheetLine = () => {
+const PitchyBird = () => {
   const [noteDetector,setNoteDetector] =useState(false);
     const [started,setStarted] = useState(false);
-  
-  const setParameters=(results)=> {
-    //console.log(results)
-  }
-  
-  const [searchParams, setSearchParams] = useSearchParams();
-  const options={
-    clef: searchParams.get("clef"),
-    sharps: searchParams.get("sharps"),
-    flats: searchParams.get("flats"),
-    maxNote: searchParams.get("maxNote"),
-    minNote: searchParams.get("minNote"),
-    tuning: searchParams.get("tuning"),
-    transposition: searchParams.get("transposition"),
-  }
-  //const clef = searchParams.get("clef");
   
   
   
@@ -83,42 +76,14 @@ const SheetLine = () => {
     game.callbacks={preBoot:(g)=>
       {
         g.noteDetector=noteDetector;
-        if (options && options.sharps) {
-          if (options.sharps<0)
-            options.sharps=[]
-          else {
-            
-            const sharps=[]
-            for (const s of options.sharps) {
-              sharps.push(Number(s))
-            }
-            
-            options.sharps=sharps
-            
-          }
-        }
-        if (options && options.flats) { 
-          if (options.flats<0)
-            options.flats=[]
-          else {
-            const flats=[]
-            for (const f of options.flats) {
-              flats.push(Number(f))
-            }
-            options.flats=flats
-            console.log(options.flats)
-          }
-        }
-        g.startOptions=options;
       }
-        
     }
     setStarted(true);
   }
   
   if (!noteDetector) {
     
-    setNoteDetector(new NoteDetector((res)=>{setParameters(res)}));
+    setNoteDetector(new NoteDetector((res)=>false));
     //startNoteDetector()
     
   }
@@ -159,4 +124,4 @@ const SheetLine = () => {
 
 
 
-export default SheetLine
+export default PitchyBird
