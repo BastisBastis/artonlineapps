@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
     this.add.image(0,0,"paper").setOrigin(0,0)
     this.pointsLabel = this.add.text(
         this.cameras.main.width*1/4, 
-        20, 
+        15, 
         "Poäng: "+this.points, 
         { 
           font: "40px Arial", 
@@ -71,8 +71,8 @@ export default class Game extends Phaser.Scene {
         }
       );
     this.livesLabel = this.add.text(
-        this.cameras.main.width*3/4, 
-        20, 
+        this.cameras.main.width*5/8, 
+        15, 
         "",
         { 
           font: "40px Arial", 
@@ -82,19 +82,23 @@ export default class Game extends Phaser.Scene {
     this.displayLives()
     
       
-    this.staffHeight=this.cameras.main.height*0.3
+    this.staffHeight=this.cameras.main.height*0.25
     
 
-    const staff = new Staff(this,this.cameras.main.centerX,this.cameras.main.centerY,this.cameras.main.width,this.staffHeight,data.options.clef)
+    const staff = new Staff(this,this.cameras.main.centerX,this.cameras.main.centerY+30,this.cameras.main.width,this.staffHeight,data.options.clef)
     
     this.add.text(this.cameras.main.centerX,this.cameras.main.height-50,"Fuska!", { 
           font: "40px Arial", 
-          fill: "#ffffff" 
+          fill: fontColor
         }).setOrigin(0.5,0.5).setInteractive().on("pointerdown",()=>this.cheat=true).setVisible(false);
-    this.noteLabel=this.add.text(this.cameras.main.width-100,this.cameras.main.height-50,"?",{ 
+    this.noteLabel=this.add.text(100,this.cameras.main.height-50,"?",{ 
           font: "40px Arial", 
-          fill: "#ffffff" 
-        }).setVisible(false);;
+          fill: fontColor
+        }).setVisible(false);
+    this.clarityLabel=this.add.text(100,this.cameras.main.height-100,"?",{ 
+          font: "40px Arial", 
+          fill: fontColor
+        }).setVisible(false);;       
     
     //const clef = this.add.image(50,this.cameras.main.centerY,"gclef");
     //clef.setScale(0.2);
@@ -108,12 +112,13 @@ export default class Game extends Phaser.Scene {
       maxIndex:!isNaN(data.options.maxNote)? data.options.maxNote : 8,
       flats:data.options.flats || [0,3,6],
       sharps:data.options.sharps || [4,1,5],
-      lineGap:29,
+      lineGap:25,
       clef:data.options.clef || "g",
       transposition:data.options.transposition || 0,
+      originY:this.cameras.main.centerY+30
     }
     
-    console.log(this.noteOptions.maxIndex)
+    
     this.nextNote();
     //this.note=Note.fromIndex(this,11,-1)
     
@@ -126,13 +131,14 @@ export default class Game extends Phaser.Scene {
   noteDetected(res) {
     //console.log(res.note)
     if (this.noteLabel!==undefined) {
+      this.clarityLabel.text=res.clarity
       if (res.clarity>=this.clarityTolerance)
         if (Math.abs(res.cents)<=this.centTolerance) {
           this.noteLabel.setFill("#00ff00");
         } else {
           this.noteLabel.setFill("#ff0000");
       } else {
-          this.noteLabel.setFill("#ffffff");
+          this.noteLabel.setFill(fontColor);
       }
       
       this.noteLabel.text=res.note
@@ -171,7 +177,7 @@ export default class Game extends Phaser.Scene {
   }
   
   displayLives() {
-    this.livesLabel.text="Liv: "+this.lives;
+    this.livesLabel.text="Chanser: "+this.lives;
   }
   
   nextNote () {
@@ -185,6 +191,14 @@ export default class Game extends Phaser.Scene {
   }
   
   update(time,delta) { 
+  
+  //Show debug labels 
+  if (this.input.activePointer.isDown && this.input.activePointer.x<20 && this.input.activePointer.y> this.cameras.main.height-20) {
+    console.log("show debug labels")
+    this.noteLabel.setVisible(true)
+    this.clarityLabel.setVisible(true)
+  }
+  
     const speed = 0.08+0.01*Math.pow(this.level,1.5);
     
     const dx = -speed*delta

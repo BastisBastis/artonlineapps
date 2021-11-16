@@ -88,6 +88,10 @@ const PitchyBird = () => {
     
   }
   
+  useEffect(()=>{
+    return ()=>noteDetector.active=false;
+  },[noteDetector])
+  
   const slStyle={
     width:"100%",
   //height:"15rem"

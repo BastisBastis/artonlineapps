@@ -49,6 +49,7 @@ const Tuner = () => {
     console.log("use")
     if (false && noteDetector)
       noteDetector.startDetecting()
+    return ()=>noteDetector.active=false
   },[noteDetector])
   
   /*
