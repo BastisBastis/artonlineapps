@@ -2,6 +2,7 @@ import Phaser from "phaser"
 
 import BirdSpritesheet from "../assets/bird.png"
 import PipeImage from "../assets/pipe.png"
+import CloudImage from "../assets/clouds.jpg"
 
 import Player from '../objects/Player'
 import PipePair from "../objects/PipePair"
@@ -16,7 +17,7 @@ export default class Game extends Phaser.Scene {
     
     this.load.spritesheet("bird", BirdSpritesheet, { frameWidth: 128, frameHeight: 128 });
     this.load.image("pipe",PipeImage)
-    
+    this.load.image("clouds",CloudImage)
     
     var config = {
             google: {
@@ -33,15 +34,17 @@ export default class Game extends Phaser.Scene {
     
   }
   
-  create(data) {
-    
+  create({sensitivity=0.99}={}) {
+    //console.log(data)
+    //const sensitivity=data.sensitivity || 0.99;
     /*
     
     */
     
     const cam=this.cameras.main;
     cam.setBackgroundColor("#bbbbff")
-    
+    const bg = this.add.image(0,0,"clouds").setOrigin(0,0);
+    bg.setScale(cam.width/bg.width)
     
     
     
@@ -70,7 +73,7 @@ export default class Game extends Phaser.Scene {
     this.shouldFlap=false;
     this.game.noteDetector.callback=res=>{
       //this.scoreLabel.text=res.clarity
-      if (res.clarity>0.96) {
+      if (res.clarity>sensitivity) {
         this.shouldFlap=true;
       }
       else {
@@ -79,6 +82,8 @@ export default class Game extends Phaser.Scene {
     }
     if (!this.game.noteDetector.active)
       this.game.noteDetector.startDetecting();
+      
+    console.log(sensitivity)
   }
   
   increaseScore() {

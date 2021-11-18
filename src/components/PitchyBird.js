@@ -14,7 +14,7 @@ import HomeButton from "./HomeButton"
 import Game from "./Pitchy/scenes/Game"
 import GameOver from "./Pitchy/scenes/GameOver"
 //import GameOver from "./NoteReader/scenes/GameOver"
-//import Menu from "./NoteReader/scenes/Menu"
+import Menu from "./Pitchy/scenes/Menu"
 
 //styles
 import styles from "./SheetLine.module.css"
@@ -47,6 +47,7 @@ const game = {
       autoCenter: Phaser.Scale.CENTER_BOTH
     },   
   scene: [
+    Menu,
     Game,
     GameOver
   ],

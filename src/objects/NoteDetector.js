@@ -35,7 +35,7 @@ export default class NoteDetector {
     }
     //this.startDetecting();
     oldDetector=this;
-    
+    this.timer=false;
   }
   
   offsetTuning(cents) {
@@ -56,6 +56,10 @@ export default class NoteDetector {
   startDetecting() {
     console.log('start')
     this.active=true;
+    if (this.timer) {
+      clearTimeout(this.timer);
+      this.timer=false
+    }
     const audioContext = new window.AudioContext();
     this.context=audioContext;
     
@@ -78,6 +82,7 @@ export default class NoteDetector {
   updatePitch(analyserNode, detector, input, sampleRate) {
     try {
     if (!this.active) {
+      this.timer=false;
       return false;
     }
     
@@ -98,7 +103,7 @@ export default class NoteDetector {
       clarity:clarity,
       frequency:pitch
     })
-    window.setTimeout(
+    this.timer=window.setTimeout(
       () => this.updatePitch(analyserNode, detector, input, sampleRate),
       100
     );

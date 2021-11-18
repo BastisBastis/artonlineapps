@@ -6,6 +6,10 @@ export default class GameOver extends Phaser.Scene {
     super("gameover");
   }
   
+  preload() {
+    
+  }
+  
   create(gameData) {
     
     try {
