@@ -7,7 +7,18 @@ export default class GameOver extends Phaser.Scene {
   }
   
   preload() {
-    
+    var config = {
+            google: {
+                families: ['Exo']
+            }
+        };
+        this.load.rexWebFont(config);
+        this.load.on('webfontactive', function (fileObj, familyName) {
+            console.log('font-active: ' + familyName)
+        });
+        this.load.on('webfontinactive', function (fileObj, familyName) {
+            console.log('font-inactive: ' + familyName)
+        })
   }
   
   create(gameData) {
@@ -63,7 +74,13 @@ export default class GameOver extends Phaser.Scene {
   
   addLabel (x,y,text,size=30,originX=0,originY=0,color="#fff") {
     
-    return this.add.text(x,y,text,{fontSize:size,color:color}).setOrigin(originX,originY)
+    return this.add.text(x,y,text,{fontFamily: 'Exo',
+            fontSize: size+'px',
+          //font: size+"px "+font, 
+          fill: color,
+          stroke:"#000",
+          strokeThickness:3
+          }).setOrigin(originX,originY)
     
   }
   
@@ -75,7 +92,7 @@ export default class GameOver extends Phaser.Scene {
     
     
     for (const [i,score] of Object.entries(highscore)) {
-      const color = score.player?"#88ff88":"ffffff";
+      const color = score.player?"#88ff88":"#ffffff";
       const x=50;
       const y=140+i*40
       const size=30

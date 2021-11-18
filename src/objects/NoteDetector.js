@@ -21,7 +21,7 @@ function centsOffFromPitch( frequency, note , tuning=440) {
 }
 
 export default class NoteDetector {
-  constructor (callback,autostart=false) {
+  constructor (callback,autostart=false,delay=100) {
     if (oldDetector) {
       oldDetector.active=false;
     }
@@ -30,6 +30,7 @@ export default class NoteDetector {
     this.active=false;
     this.context=false;
     this.tuning=440
+    this.delay=delay
     if (autostart) {
       this.startDetecting();
     }
@@ -105,7 +106,7 @@ export default class NoteDetector {
     })
     this.timer=window.setTimeout(
       () => this.updatePitch(analyserNode, detector, input, sampleRate),
-      100
+      this.delay
     );
     } catch (err) { alert(err) }
   }

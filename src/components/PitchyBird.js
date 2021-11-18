@@ -84,7 +84,7 @@ const PitchyBird = () => {
   
   if (!noteDetector) {
     
-    setNoteDetector(new NoteDetector((res)=>false));
+    setNoteDetector(new NoteDetector((res)=>false),false,16);
     //startNoteDetector()
     
   }
