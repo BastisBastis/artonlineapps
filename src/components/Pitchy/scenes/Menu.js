@@ -147,16 +147,16 @@ export default class Menu extends Phaser.Scene {
     slider.setValue(this.options.sensitivity)
     
     const indicator=this.add.circle(cam.centerX,cam.height*0.35,15,0xff0000)
-    
+    this.labels.push(indicator)
     
     this.game.noteDetector.callback=(res)=>{
-      console.log(res.clarity)
+      
       indicator.setFillStyle(res.clarity>this.options.sensitivity?0x00ff00:0xff0000,1);
     }
     this.game.noteDetector.startDetecting();
     
     this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
-      
+      this.game.noteDetector.callback=()=>false;
       this.showMain();
     });
   }

@@ -13,6 +13,7 @@ import HomeIcon from "../assets/images/home.png"
 import NoteReaderIcon from '../assets/notereaderIcon.png'
 import SmartIcon from "../assets/images/smart.png"
 import TunerIcon from "../assets/images/tunericon.png"
+import PitchyBirdIcon from "../assets/images/pitchy-bird.png"
 
 const Home = () => {
   
@@ -26,7 +27,7 @@ const Home = () => {
         <AppLink to="/notereader" title="Pricka Noten" image={NoteReaderIcon} />
         <AppLink to="/tuner" title="Stämapparat" image={TunerIcon} />
         <AppLink to="/smart" title="S.M.Art" image={SmartIcon} />
-        <AppLink to="/pitchy" title="Pitchy Bird" image={HomeIcon} />
+        <AppLink to="/pitchy" title="Pitchy Bird" image={PitchyBirdIcon} />
       </div>
     </nav> 
     
