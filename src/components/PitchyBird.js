@@ -93,20 +93,46 @@ const PitchyBird = () => {
     return ()=>noteDetector.active=false;
   },[noteDetector])
   
+  const parentStyle={
+    display: "grid",
+    //resize: both;
+    height: "100vh",
+    width: "100vw",
+    //border: 2px solid #000;
+    overflow: "hidden"
+  }
+  
   const slStyle={
-    width:"100%",
+    width: "100%",
+    maxHeight: "100%",
+    margin: "auto",
+    aspectRatio: "3 / 2",
+    overflow: "hidden",
+    boxSizing: "border-box",
+    position: "relative",
+    background: "#a0522d",
+    textAlign: "center",
+    //font-size: 20px;
+    //color: white;
+    /* using the below to center the text, optional */
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
   //height:"15rem"
   }
   
   if (started) {
     return (
+      <div style={parentStyle}>
       <div style={slStyle} id="sl">
         <HomeButton color="#454545"/>
         <IonPhaser game={game} />
       </div>
+      </div>
     );
   } else {
     return (
+      <div style={parentStyle}>
       <div style={slStyle} id="sl">
       < HomeButton color="#454545"/>
         <div style={{
@@ -121,6 +147,7 @@ const PitchyBird = () => {
           color:"#ffffff",
           fontSize:"2rem"
         }} onClick={start}>Starta</div>
+    </div>
     </div>
     )
   }
