@@ -31,12 +31,12 @@ export default class GameOver extends Phaser.Scene {
     
      
    
-    this.addLabel(cam.width/2,50,`Du fick ${gameData.score} poäng!`,30,0.5,0.5);
-    this.addLabel(cam.width/2,100,`Topplista:`,30,0.5,0.5);
+    this.addLabel(cam.width/2,75,`Du fick ${gameData.score} poäng!`,45,0.5,0.5);
+    this.addLabel(cam.width/2,150,`Topplista:`,45,0.5,0.5);
     
     
     
-    this.addLabel(cam.width/2,cam.height-50,"Spela igen!",40,0.5,0.5).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.width/2,cam.height-75,"Spela igen!",60,0.5,0.5).setInteractive().on("pointerdown",()=>{
       this.scene.start("game");
     })
     
@@ -72,14 +72,14 @@ export default class GameOver extends Phaser.Scene {
     } catch (e) { alert(e)}
   }
   
-  addLabel (x,y,text,size=30,originX=0,originY=0,color="#fff") {
+  addLabel (x,y,text,size=45,originX=0,originY=0,color="#fff") {
     
     return this.add.text(x,y,text,{fontFamily: 'Exo',
             fontSize: size+'px',
           //font: size+"px "+font, 
           fill: color,
           stroke:"#000",
-          strokeThickness:3
+          strokeThickness:5
           }).setOrigin(originX,originY)
     
   }
@@ -93,9 +93,9 @@ export default class GameOver extends Phaser.Scene {
     
     for (const [i,score] of Object.entries(highscore)) {
       const color = score.player?"#88ff88":"#ffffff";
-      const x=50;
-      const y=140+i*40
-      const size=30
+      const x=75;
+      const y=210+i*60
+      const size=45
       this.addLabel(x,y,score.name,size,0.0,0.5,color);
       this.addLabel(cam.width-x,y,score.score,size,1,0.5,color);
     }

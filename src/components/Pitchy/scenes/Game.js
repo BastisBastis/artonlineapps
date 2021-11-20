@@ -57,7 +57,7 @@ export default class Game extends Phaser.Scene {
       this.scene.launch("gameover",{score:this.score})
     })
     
-    const pipeOpening=200
+    const pipeOpening=300
     this.pipePairs=[
        PipePair.random(this,pipeOpening,this.pipes),
        PipePair.random(this,pipeOpening,this.pipes,1.4),
@@ -66,9 +66,9 @@ export default class Game extends Phaser.Scene {
     
     
     this.score=0;
-    this.scoreLabel=this.add.text(35,70,0,{
+    this.scoreLabel=this.add.text(75,105,0,{
           fontFamily: 'Exo',
-          fontSize: '40px',
+          fontSize: '60px',
           //font: size+"px "+font, 
           fill: "#fff",
           stroke:"#000",

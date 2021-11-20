@@ -7,13 +7,13 @@ export default class PipePair {
     const x=scene.cameras.main.width*xFactor;
     this.x=x;
     this.prevX=x;
-    const scaleX=0.4;
-    const scaleY=0.5;
+    const scaleX=0.6;
+    const scaleY=0.75;
     this.topPipe = scene.physics.add.sprite(x,y-opening/2,"pipe").setOrigin(0,1).setScale(scaleX,scaleY).setFlipY(true);
     this.topPipe.body.setAllowGravity(false);
     this.bottomPipe=scene.physics.add.sprite(x,y+opening/2,"pipe").setOrigin(0,0).setScale(scaleX,scaleY);
     this.bottomPipe.body.setAllowGravity(false);
-    this.setSpeed(50)
+    this.setSpeed(75)
     this.startX=scene.cameras.main.width
     
     collisionGroup.add(this.topPipe)
@@ -41,7 +41,7 @@ export default class PipePair {
     this.topPipe.setY(y - this.opening/2)
     this.bottomPipe.setY(y + this.opening/2)
     
-    console.log(this.opening,this.bottomPipe.y-this.topPipe.y)
+    
   }
   
   update(time,delta) {

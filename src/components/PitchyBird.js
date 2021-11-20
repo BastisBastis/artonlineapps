@@ -41,8 +41,8 @@ const game = {
 	},
   scale: {
     parent:"sl",
-      width: 600,
-      height: 400,
+      width: 1136,
+      height: 640,
       mode: Phaser.Scale.FIT,
       autoCenter: Phaser.Scale.CENTER_BOTH
     },   
@@ -98,6 +98,7 @@ const PitchyBird = () => {
     //resize: both;
     height: "100vh",
     width: "100vw",
+    background:"#fff",
     //border: 2px solid #000;
     overflow: "hidden"
   }
@@ -110,7 +111,7 @@ const PitchyBird = () => {
     overflow: "hidden",
     boxSizing: "border-box",
     position: "relative",
-    background: "#a0522d",
+    //background: "#a0522d",
     textAlign: "center",
     //font-size: 20px;
     //color: white;
@@ -142,9 +143,9 @@ const PitchyBird = () => {
           paddingBottom:"20%",
           
           height:"3rem",
-          backgroundColor:"#bbbbff",
+          //backgroundColor:"#bbbbff",
           textAlign:"center",
-          color:"#ffffff",
+          color:"#454545",
           fontSize:"2rem"
         }} onClick={start}>Starta</div>
     </div>
