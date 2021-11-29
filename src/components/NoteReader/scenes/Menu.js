@@ -4,6 +4,7 @@ import Phaser from "phaser"
 //Objects
 import Note from "../objects/Note"
 import Staff from "../objects/Staff"
+import Slider from "../../Pitchy/objects/Slider"
 
 //Images
 import GClefImage from "../assets/gclef.png"
@@ -16,6 +17,7 @@ import PaperImage from "../assets/paper2.jpg"
 const fontColor = "#454545"
 const fontColorNum = 0x454545;
 const fontColorDeselected = "#ababab"
+const fontColorDeselectedNum=0xababab;
 const font= "Segoe UI"
 
 export default class Menu extends Phaser.Scene {
@@ -73,6 +75,7 @@ export default class Menu extends Phaser.Scene {
       clef:"g",
       transposition:0,
       tuning:440,
+      sensitivity:0.99
     }
     
     for (const [key,val] of Object.entries(defaultOptions)) {
@@ -144,6 +147,10 @@ export default class Menu extends Phaser.Scene {
         callback:()=>this.showTuning()
       },
       {
+        title:"Känslighet",
+        callback:()=>this.showSensitivity()
+      },
+      {
         title:"Tillbaka",
         callback:()=>this.showMain()
       },
@@ -168,7 +175,7 @@ export default class Menu extends Phaser.Scene {
     const cam=this.cameras.main;
     
     this.addLabel(cam.centerX,50,"Välj förtecken",50);
-    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>this.showSettings())
+    this.addLabel(cam.centerX,cam.height*11/12,"Tillbaka",40).setInteractive().on("pointerdown",()=>this.showSettings())
     
     
     const sharpNames=[
@@ -305,7 +312,7 @@ export default class Menu extends Phaser.Scene {
       
     })
    
-    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height*11/12,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       topNote.dest();
       bottomNote.dest()
       this.showSettings();
@@ -392,7 +399,7 @@ export default class Menu extends Phaser.Scene {
     
     
     
-    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height*11/12,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       this.showSettings();
     });
   }
@@ -484,11 +491,64 @@ export default class Menu extends Phaser.Scene {
     
     
     
-    this.addLabel(cam.centerX,cam.height-40,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+    this.addLabel(cam.centerX,cam.height*11/12,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
       note.dest()
       this.showSettings();
     });
   }
+  
+  showSensitivity() {
+    this.clear();
+    const cam=this.cameras.main;
+    
+    this.addLabel(cam.centerX,50,"Välj känslighet",50);
+    
+    
+    const sensitivityLabel=this.addLabel(cam.centerX,cam.height*0.7,"",50);
+    
+    const setSensitivity=(value)=>{
+      
+      this.options.sensitivity=Math.round(value*1000)/1000
+      sensitivityLabel.text=this.options.sensitivity
+      //alert()
+    }
+    
+    const slider = new Slider(
+      this,
+      cam.width/2,
+      cam.centerY,
+      cam.width*2/3,
+      0.9,
+      1.0,
+      0.99,
+      ((val)=>setSensitivity(val)),
+      2,
+      fontColorDeselectedNum,
+      fontColorNum,
+      10,
+      50)
+      
+    
+    this.labels.push(slider)
+    
+    slider.setValue(this.options.sensitivity)
+    
+    const indicator=this.add.circle(cam.centerX,cam.height*0.35,15,0xff0000)
+    this.labels.push(indicator)
+    
+    this.game.noteDetector.callback=(res)=>{
+      
+      indicator.setFillStyle(res.clarity>this.options.sensitivity?0x00ff00:0xff0000,1);
+    }
+    this.game.noteDetector.startDetecting();
+    
+    
+    this.addLabel(cam.centerX,cam.height*11/12,"Tillbaka",40).setInteractive().on("pointerdown",()=>{
+      this.game.noteDetector.callback=()=>false
+      this.showSettings()
+    })
+  }
+  
   
   share() {
     /*
@@ -523,6 +583,8 @@ export default class Menu extends Phaser.Scene {
       
       url+="&transposition="+this.options.transposition;
       url+="&tuning="+this.options.tuning
+      
+      url+="&sensitivity="+this.options.sensitivity
       
       prompt("Länk till spelet med nuvarande inställningar:",url)
       

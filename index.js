@@ -28,6 +28,16 @@ const getJsonFile=path=>{
   return json;
 }
 
+app.post('/skissa/save',(req, res)=> {
+  const data = req.body.data;
+  
+  const path = __dirname+"/data/skissaDrawings.json"
+  const collection = getJsonFile(path)
+  collection.push(JSON.parse(data))
+  fs.writeFileSync(path, JSON.stringify(collection))
+  res.json(true);
+})
+
 app.post('/pitchy/highscore',(req, res)=> {
   const score = req.body.score;
   const name = req.body.name;
@@ -55,6 +65,7 @@ app.post('/pitchy/highscore',(req, res)=> {
   
   res.json(newHs);
 })
+
 app.get('/pitchy/highscore',(req, res)=> {
   const score = req.query.score;
   const hs = getJsonFile(__dirname+"/data/pitchyHighscore.json")

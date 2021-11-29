@@ -1,0 +1,45 @@
+
+.toolbar {
+  height:60px;
+  margin:0;
+  padding:0;
+  display:flex;
+}
+
+.button {
+  height:100%;
+  width:100%;
+  border:solid 1px black;
+  text-align:center;
+  background:#dddddd;
+}
+  
+.activeButton {
+  background:#aaaaaa;
+}
+
+.colorPickerContainer {
+  position: absolute; 
+  top:0;
+  bottom:0;
+  margin:auto;
+  left: 0; 
+  right: 0; 
+  height:200px;
+  width: 200px;
+}
+  
+.unCollapsed {
+  position:absolute;
+  width:25%;
+  background:#cdcdcd;
+  bottom:60px;
+  border:1px solid black;
+}
+
+.saveMenuButton {
+  width:100%;
+  border: 1px solid black;
+  text-align:center;
+  padding:0.5em 0;
+}

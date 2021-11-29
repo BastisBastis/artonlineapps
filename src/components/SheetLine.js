@@ -106,7 +106,7 @@ const SheetLine = () => {
               flats.push(Number(f))
             }
             options.flats=flats
-            console.log(options.flats)
+            
           }
         }
         g.startOptions=options;

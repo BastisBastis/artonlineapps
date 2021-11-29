@@ -105,7 +105,7 @@ export default class Game extends Phaser.Scene {
     
     this.killX=170;
     this.centTolerance= data.options.centTolerance || 50;
-    this.clarityTolerance= data.options.clarityTolerance || 0.95;
+    this.sensitivity= data.options.sensitivity || 0.95;
     
     this.noteOptions={
       minIndex:!isNaN(data.options.minNote)? data.options.minNote : -8,
@@ -132,7 +132,7 @@ export default class Game extends Phaser.Scene {
     //console.log(res.note)
     if (this.noteLabel!==undefined) {
       this.clarityLabel.text=res.clarity
-      if (res.clarity>=this.clarityTolerance)
+      if (res.clarity>=this.sensitivity)
         if (Math.abs(res.cents)<=this.centTolerance) {
           this.noteLabel.setFill("#00ff00");
         } else {

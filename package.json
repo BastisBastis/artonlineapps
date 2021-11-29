@@ -1,5 +1,8 @@
 {
   "version": "1.0.0",
+  "scripts": {
+    "build": "webpack"
+  },
   "dependencies": {
     "@babel/core": "7.x.x",
     "@babel/preset-env": "7.x.x",
@@ -13,11 +16,19 @@
     "phaser3-rex-plugins": "^1.1.63",
     "pitchy": "^2.1.0",
     "react": "16.x.x",
+    "react-canvas-draw": "^1.2.1",
+    "react-colorful": "^5.5.1",
     "react-dom": "16.x.x",
+    "react-pro-metronome": "^1.1.0",
     "react-router-dom": "^6.0.1",
+    "simple-beats": "^1.0.14",
     "style-loader": "0.x.x",
     "url-loader": "^2.0.0",
+    "wa-metro": "^1.1.2",
     "webpack": "4.x.x",
     "webpack-dev-middleware": "3.7.x"
+  },
+  "devDependencies": {
+    "webpack-cli": "^4.9.1"
   }
 }

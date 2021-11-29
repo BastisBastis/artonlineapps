@@ -28,6 +28,8 @@ const Home = () => {
         <AppLink to="/tuner" title="Stämapparat" image={TunerIcon} />
         <AppLink to="/smart" title="S.M.Art" image={SmartIcon} />
         <AppLink to="/pitchy" title="Pitchy Bird" image={PitchyBirdIcon} />
+        <AppLink to="/metronome" title="Metronom" image={HomeIcon} />
+        <AppLink to="/skissa" title="Skissa" image={HomeIcon} />
       </div>
     </nav> 
     
