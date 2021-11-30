@@ -9,7 +9,7 @@ import { HexColorPicker as ColorPicker } from "react-colorful";
 
 import styles from "./Skissa.module.css"
 
-const Drawer = ()=> {
+const Drawer = (props)=> {
   
   const [brushRadius , setBrushRadius] = useState(4)
   const [brushColor , setBrushColor] = useState("#ababab")
@@ -66,7 +66,7 @@ const Drawer = ()=> {
   }
   
   const openGallery=(index) =>{
-    navigate("/skissa/gallery");
+    props.galleryLink(index)
   }
   
   return (

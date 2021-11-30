@@ -35,7 +35,21 @@ app.post('/skissa/save',(req, res)=> {
   const collection = getJsonFile(path)
   collection.push(JSON.parse(data))
   fs.writeFileSync(path, JSON.stringify(collection))
-  res.json(true);
+  res.json(collection.length-1);
+})
+
+app.post('/skissa/drawings',(req, res)=> {
+  const data = req.body.data;
+  
+  returnData={}
+  const path = __dirname+"/data/skissaDrawings.json"
+  const collection = getJsonFile(path)
+  returnData.totalCount=collection.length;
+  if (!isNaN(data.index) && data.index>=0 && data.index<collection.length) {
+    returnData.drawing=collection[data.index];
+  }
+  
+  res.json(returnData);
 })
 
 app.post('/pitchy/highscore',(req, res)=> {
