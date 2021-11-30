@@ -29,7 +29,7 @@ const getJsonFile=path=>{
 }
 
 app.post('/skissa/save',(req, res)=> {
-  const data = req.body.data;
+  const data = req.query;
   
   const path = __dirname+"/data/skissaDrawings.json"
   const collection = getJsonFile(path)
@@ -38,7 +38,7 @@ app.post('/skissa/save',(req, res)=> {
   res.json(collection.length-1);
 })
 
-app.post('/skissa/drawings',(req, res)=> {
+app.get('/skissa/drawings',(req, res)=> {
   const data = req.body.data;
   
   returnData={}
