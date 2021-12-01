@@ -34,17 +34,31 @@ const GALLERY_MODE=1;
 const Skissa = ()=> {
   
   const [mode,setMode] = useState(DRAW_MODE);
-  
+  const [currentDrawing,setCurrentDrawing] = useState(false)
   
   
   if (mode===DRAW_MODE) {
     return (
-      <Drawer galleryLink={(index=>setMode(GALLERY_MODE))}/>
+      <Drawer 
+      drawingData={currentDrawing}
+      galleryLink={((drawingData,index)=>{
+        setMode(GALLERY_MODE);
+        setCurrentDrawing(drawingData)
+      })
+      }/>
     )
   }
   else if (mode===GALLERY_MODE) {
     return (
-      <Gallery />
+      <Gallery 
+        
+        drawerLink={((drawingData)=>{
+        if (drawingData)
+          setCurrentDrawing(drawingData)
+        setMode(DRAW_MODE);
+        })
+      }
+      />
     )
   }
 }

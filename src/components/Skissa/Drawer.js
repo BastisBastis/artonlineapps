@@ -14,6 +14,8 @@ const Drawer = (props)=> {
   const [brushRadius , setBrushRadius] = useState(4)
   const [brushColor , setBrushColor] = useState("#ababab")
   
+  const [canvasRendered,setCanvasRendered]=useState(false);
+  
   const canvasRef = useRef();
   
   const navigate = useNavigate();
@@ -61,13 +63,24 @@ const Drawer = (props)=> {
     if (canvasRef) {
       
       const data= localStorage.getItem("skissaSave");
+      console.log(data)
       canvasRef.current.loadSaveData(data)
     }
   }
   
   const openGallery=(index) =>{
-    props.galleryLink(index)
+    props.galleryLink(canvasRef.current.getSaveData(),index)
   }
+  
+  useEffect(()=>{
+    if (canvasRef && props.drawingData) {
+      canvasRef.current.loadSaveData(props.drawingData)
+    }
+  },[canvasRendered])
+  
+  useEffect(()=>{
+    setCanvasRendered(true)
+  },[])
   
   return (
     <div style={{}}>
@@ -102,7 +115,12 @@ const Drawer = (props)=> {
         />
         < ToolButton 
           title="Undo"
-          
+          callback={(()=>{
+            if (canvasRef) {
+              canvasRef.current.undo();
+              }
+            })
+          }
         />
         < ToolButton 
           title="Spara"

@@ -3,76 +3,104 @@ import React, { useRef,useState, useEffect } from "react"
 
 //Components
 import CanvasDraw from "react-canvas-draw";
-import CanvasDraw from "react-canvas-draw";
 import ToolButton from './ToolButton'
 import styles from "./Skissa.module.css"
 
+const buttonHeight=60;
+const slowLoadingTime=5;
+
 const Gallery = (props)=> {
     
-    const {drawingLoaded, setDrawingLoaded} = useState(false);
+    const [drawingLoaded, setDrawingLoaded] = useState(false);
+    const [drawingIndexes,setDrawingIndexes] = useState([]);
+    const [currentIndex,setCurrentIndex]=useState(props.index || 0);
+    const [currentData, setCurrentData] = useState(1);
+    const [shouldPlay,setShouldPlay]=useState(false)
+    
+    
     const canvasRef = useRef();
 
+    const fetchDrawing=(index)=>{
+      setDrawingLoaded(false);
+      fetch("./skissa/drawings?index="+drawingIndexes[index]).then(res=>res.json()).then(data=>{
+        setCurrentIndex(index)
+        setCurrentData(JSON.stringify(data.drawing))
+        setDrawingLoaded(true);
+        try {
+        canvasRef.current.loadSaveData(JSON.stringify(data.drawing))
+        } catch (e) {alert(e)}
+        });
+    }
+    
+ 
+    
     useEffect(()=>{
       setDrawingLoaded(false);
       fetch("./skissa/drawings").then(res=>res.json()).then(data=>{
-        console.log(data);
+        const tmpIndexes=[];
+        for (let i=0;i<data.totalCount;i++) {
+          tmpIndexes.push(i);
+        }
+        setDrawingIndexes(tmpIndexes);
+        
       });
     },[])
+    
+    useEffect(()=> {
+      if (drawingIndexes.length>0)
+      fetchDrawing(0)
+    },[drawingIndexes])
+    
+    useEffect(()=>{
+      if (shouldPlay) {
+        canvasRef.current.loadSaveData(currentData);
+      }
+    },[shouldPlay])
+    
+    const nextDrawing=() => {
+      const i = (currentIndex+1) % drawingIndexes.length;
+      setShouldPlay(false);
+      fetchDrawing(i);
+    }
+    
+    const prevDrawing=()=>{
+      const i = (currentIndex+drawingIndexes.length-1) % drawingIndexes.length
+      fetchDrawing(i);
+    }
+    
   
   return (
     <div style={{}}>
       <CanvasDraw 
         ref={canvasRef}
-        brushRadius={brushRadius}
-        brushColor={brushColor}
+        loadTimeOffset={shouldPlay?10:1}
         canvasWidth={window.innerWidth}
         canvasHeight={window.innerHeight-buttonHeight}
         hideGrid={true}
+        disabled={true}
+        hideInterface={true}
         enablePanAndZoom={true}
       />
       <div className={styles.toolbar}>
         < ToolButton 
-          title="Färg"
-          toggle={true}
-          children={[
-            <div className={styles.colorPickerContainer}>
-              <ColorPicker color={brushColor} />
-            </div>
-          ]}
+          title="Föregående"
+          callback={prevDrawing}
         />
         < ToolButton 
-          title="Pensel"
-          toggle={true}
-          children={[
-            <BrushSizePicker 
-              radius={brushRadius} 
-              />
-          ]}
+          title="Nästa"
+          callback={nextDrawing}
         />
         < ToolButton 
-          title="Undo"
-          
+          title="Titta"
+          callback={(()=>setShouldPlay(true))}
         />
         < ToolButton 
-          title="Spara"
-          toggle={true}
-          children={[
-            <div className={styles.unCollapsed}>
-              <div className={styles.saveMenuButton} >
-                Spara
-              </div>
-              <div className={styles.saveMenuButton} >
-                Ladda
-              </div>
-              <div className={styles.saveMenuButton} >
-                Publicera
-              </div>
-            </div>
-          ]}
+          title="Använd"
+          callback={()=>props.drawerLink(currentData)}
         />
         < ToolButton 
-            title="Galleri"
-            
+            title="Tillbaka"
+            callback={()=>props.drawerLink()}
         />
       </div>
     </div>
