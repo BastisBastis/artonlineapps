@@ -3,7 +3,7 @@ import React, { useState, useEffect }from "react"
 import {  Link} from "react-router-dom";
 //Components
  import AppLink from "./AppLink"
-
+import Title from "./HomePage/Title"
 
 //Styles
 import styles from "./Home.module.css"
@@ -14,6 +14,7 @@ import NoteReaderIcon from '../assets/notereaderIcon.png'
 import SmartIcon from "../assets/images/smart.png"
 import TunerIcon from "../assets/images/tunericon.png"
 import PitchyBirdIcon from "../assets/images/pitchy-bird.png"
+import VellingeIcon from "../assets/images/VellingeKommun.png"
 
 const Home = () => {
   
@@ -22,14 +23,15 @@ const Home = () => {
   return (
     
     <nav className={styles.main} >
-      <h1 className={styles.title}>ARTISTEN ONLINE</h1>
+      <Title />
       <div className={styles.linkContainer}>
         <AppLink to="/notereader" title="Pricka Noten" image={NoteReaderIcon} />
         <AppLink to="/tuner" title="Stämapparat" image={TunerIcon} />
-        <AppLink to="/smart" title="S.M.Art" image={SmartIcon} />
+        <AppLink external to="https://www.artistenonline.se" title="S.M.Art" image={SmartIcon} />
         <AppLink to="/pitchy" title="Pitchy Bird" image={PitchyBirdIcon} />
         <AppLink to="/metronome" title="Metronom" image={HomeIcon} />
         <AppLink to="/skissa" title="Skissa" image={HomeIcon} />
+        <AppLink external noStretch to="https://www.vellinge.se/vellinge-kulturskola-artisten" title="Hemsida" image={VellingeIcon} />
       </div>
     </nav> 
     
