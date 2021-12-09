@@ -1,5 +1,6 @@
 import React, { useState, useEffect }from "react"
 
+
 import {  Link} from "react-router-dom";
 //Components
  import AppLink from "./AppLink"
@@ -16,6 +17,8 @@ import TunerIcon from "../assets/images/tunericon.png"
 import PitchyBirdIcon from "../assets/images/pitchy-bird.png"
 import VellingeIcon from "../assets/images/VellingeKommun.png"
 import ArtistenLogo from "../assets/images/KSLogga.png"
+import { MdOutlineDraw as SkissaIcon } from 'react-icons/md'
+import { GiMetronome as MetronomeIcon } from 'react-icons/gi'
 
 const Home = () => {
   
@@ -30,11 +33,12 @@ const Home = () => {
         <AppLink to="/tuner" title="Stämapparat" image={TunerIcon} />
         <AppLink external to="https://www.artistenonline.se" title="S.M.Art" image={SmartIcon} />
         <AppLink to="/pitchy" title="Pitchy Bird" image={PitchyBirdIcon} />
-        <AppLink to="/metronome" title="Metronom" image={HomeIcon} />
-        <AppLink to="/skissa" title="Skissa" image={HomeIcon} />
+        <AppLink to="/metronome" title="Metronom" image={MetronomeIcon} iconColor={"#000"} />
+        <AppLink to="/skissa" title="Skissa" image={SkissaIcon} iconColor={"#000"} />
         <AppLink external noStretch to="https://www.vellinge.se/vellinge-kulturskola-artisten" title="Hemsida" image={VellingeIcon} />
         
         <AppLink external noStretch to="https://svvellinge.speedadmin.dk/registration#/" title="Anmälan" image={ArtistenLogo} />
+        <AppLink to="/coursefinder" title="Hitta rätt kurs" image={SkissaIcon} iconColor={"#000"} />
       </div>
     </nav> 
     

@@ -12,6 +12,7 @@ import Smart from "./Smart"
 import PitchyBird from "./PitchyBird"
 import Metro from "./Metronome"
 import Skissa from "./Skissa/Skissa"
+import CourseFinder from "./CourseFinder/CourseFinder"
 
 
 
@@ -30,6 +31,7 @@ const PageContainer = () => {
         <Route path="/pitchy" element={< PitchyBird />} />
         <Route path="/metronome" element={< Metro />} />
         <Route path="/skissa" element={< Skissa />} />
+        <Route path="/coursefinder" element={< CourseFinder />} />
     </Routes>
     
     

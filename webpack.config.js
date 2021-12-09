@@ -55,7 +55,19 @@ module.exports = {
             name: 'images/[hash]-[name].[ext]'
           } 
         }]
-      }
+      },
+      {
+      test: /\.webm|mov|mp4$/,
+      use: [
+          {
+            loader: "file-loader",
+            options: {
+                name: "[name].[ext]",
+                outputPath: "video"
+            }
+        }
+    ]
+}
     ]
   },
   plugins: [],

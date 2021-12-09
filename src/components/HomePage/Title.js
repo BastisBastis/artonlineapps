@@ -29,7 +29,7 @@ const Title = ()=> {
   return (
     <div style={imgContStyle}>
       <img src={logo} style={imgStyle} />
-      <p style={tagStyle}>online</p>
+      <p style={tagStyle} className={styles.blink}>online</p>
     </div>
   )
 }

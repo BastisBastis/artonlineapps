@@ -54,11 +54,26 @@ const AppLink = (props)=> {
   }
   
   
+  let image;
+  if (typeof(props.image) == "string") {
+    image= <img src={props.image} style={iconStyle} />
+  } else {
+    const Icon =props.image;
+    image = <Icon style={iconStyle} color={props.iconColor} />
+    /*
+    image = (<span style={{
+      width:"4em"
+    }}>{props.image} </span> )
+    */
+    
+  }
+  
+  
   
   const contents= (
     <>
       <div style={iconContStyle}>
-        <img src={props.image} style={iconStyle} />
+        {image}
       </div>
         <p style={titleStyle}>
           {props.title}
