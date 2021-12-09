@@ -1,5 +1,5 @@
-import TestAnimWebm from "./assets/animations/Test8.webm"
-import TestAnimMov from "./assets/animations/Test7.mov"
+import TestAnimWebm from "./assets/animations/Rotwebm.webm"
+import TestAnimMov from "./assets/animations/Rothevc.mp4"
 
 const Rooms=[];
 
