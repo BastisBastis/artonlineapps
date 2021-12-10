@@ -1,6 +1,7 @@
 import React, {useState, useRef} from "react"
 
 import sal10Image from "./assets/Sal10.jpg"
+import { BsFillArrowLeftCircleFill as BackIcon } from "react-icons/bs";
 
 const MODE_TITLE =0;
 const MODE_COURSES =1;
@@ -20,7 +21,8 @@ const RoomViewer = (props) => {
     height:"100vh",
     width:"100vw",
     backgroundImage:"url("+sal10Image+")",
-    backgroundSize: "cover"
+    backgroundSize: "cover",
+    fontSize:"18px"
   }
   
   const boxStyle = {
@@ -34,7 +36,9 @@ const RoomViewer = (props) => {
   }
   const titleStyle={
     ...boxStyle,
-    fontSize:"1.5rem"
+    padding: "0.5rem 0",
+    fontSize:"1.6rem",
+    fontWeight:"800"
   }
   
   const coursesStyle = {
@@ -45,9 +49,11 @@ const RoomViewer = (props) => {
   
   const courseStyle = {
     border:"solid 1px black",
-    height:"2rem",
+    //height:"2rem",
     width:"100%",
-    textAlign:"left"
+    textAlign:"left",
+    padding:"0.5em 1em"
+    
   }
   
   const setCourse=(i)=>{
@@ -63,6 +69,7 @@ const RoomViewer = (props) => {
     <div style={bgStyle}>
       { mode === MODE_TITLE && (<>
         <div style={titleStyle} >
+        <BackIcon />
           {room.title}
         </div>
         <div style={boxStyle} onClick={()=>setMode(MODE_COURSES)}>
@@ -101,7 +108,10 @@ const RoomViewer = (props) => {
           </>
         )}
           
-          <video webkitPlaysInline playsInline width={window.innerWidth}  preload style={{visibility:"visible", backgroundColor:"transparent", display: MODE_ANIMATION === mode? "inline": "none"}} ref={videoRef}>
+          <video webkitPlaysInline playsInline width={window.innerWidth}  preload style={{
+            visibility:"visible", 
+            backgroundColor:"transparent", 
+            display: MODE_ANIMATION === mode? "inline": "none"}} ref={videoRef}>
             { courseIndex>=0 &&
               (<>
                 <source 
