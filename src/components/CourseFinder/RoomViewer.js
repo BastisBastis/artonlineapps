@@ -123,15 +123,22 @@ const RoomViewer = (props) => {
                   <source 
                   src={room.courses[courseIndex].videos.webm} 
                   type="video/webm" /> )
-                }
-                {room.courses[courseIndex].videos.gif && (
-                  <img src={room.courses[courseIndex].videos.gif} />
-                   )
                 } 
                 </>
                 )
               }    
           </video>
+          {courseIndex>=0 && room.courses[courseIndex].videos.gif && (
+                  <img style={{
+                    maxHeight:"70%",
+                    maxWidth:"100%",
+                    position:"absolute",
+                    left:"50%",
+                    top:"50%",
+                    transform: "translate(-50%, -50%)"
+                  }} src={room.courses[courseIndex].videos.gif} />
+                   )
+                }
         </>
       
     </div>
