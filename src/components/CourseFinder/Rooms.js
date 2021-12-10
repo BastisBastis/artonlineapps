@@ -35,7 +35,7 @@ Rooms.push({
     {
       title:"Magdans",
       description:"Rulla med magen å sånt",
-      videos:{hevc:TestAnimMov, webm:TestAnimWebm, gif:ShowdanceGif}
+      videos:{hevc:TestAnimMov, webm:TestAnimWebm}
     }
   ]
 })
