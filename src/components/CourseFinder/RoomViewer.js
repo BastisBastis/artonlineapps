@@ -36,24 +36,33 @@ const RoomViewer = (props) => {
   }
   const titleStyle={
     ...boxStyle,
+    position:"relative",
     padding: "0.5rem 0",
-    fontSize:"1.6rem",
+    fontSize:"1.4rem",
     fontWeight:"800"
   }
   
   const coursesStyle = {
     ...boxStyle,
     padding:0,
-    maxHeight:"100%"
+    maxHeight:"100%",
+    position:"relative"
   }
   
   const courseStyle = {
     border:"solid 1px black",
     //height:"2rem",
-    width:"100%",
+    //width:"100%",
     textAlign:"left",
     padding:"0.5em 1em"
     
+  }
+  
+  const backBtnStyle = {
+    position:"absolute",
+    left:"0.5rem",
+    top:"50%",
+    transform:"translateY(-50%)"
   }
   
   const setCourse=(i)=>{
@@ -69,7 +78,7 @@ const RoomViewer = (props) => {
     <div style={bgStyle}>
       { mode === MODE_TITLE && (<>
         <div style={titleStyle} >
-        <BackIcon />
+        <BackIcon style={backBtnStyle} onClick={props.gotoMap}/>
           {room.title}
         </div>
         <div style={boxStyle} onClick={()=>setMode(MODE_COURSES)}>
@@ -81,6 +90,7 @@ const RoomViewer = (props) => {
         mode === MODE_COURSES && (
           <>
           <div style={titleStyle}>
+            <BackIcon style={backBtnStyle} onClick={()=>setMode(MODE_TITLE)} />
             Välj kurs:
           </div>
           <div style={coursesStyle}>
@@ -101,6 +111,13 @@ const RoomViewer = (props) => {
       <>
         { mode === MODE_ANIMATION && (
           <>
+           <div style={titleStyle}>
+            <BackIcon style={backBtnStyle} onClick={(()=>{
+              setCourseIndex(-1);
+              setMode(MODE_COURSES)
+            })} />
+             {room.courses[courseIndex].title}
+          </div>
           <div style={boxStyle}>
             {room.courses[courseIndex].description}
             
@@ -134,7 +151,7 @@ const RoomViewer = (props) => {
                     maxWidth:"100%",
                     position:"absolute",
                     left:"50%",
-                    top:"50%",
+                    top:"60%",
                     transform: "translate(-50%, -50%)"
                   }} src={room.courses[courseIndex].videos.gif} />
                    )

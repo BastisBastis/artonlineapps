@@ -10,7 +10,7 @@ const CourseFinder = ()=> {
   
   if (room) {
     return (
-      <RoomViewer room={room} />
+      <RoomViewer room={room} gotoMap={()=>setRoom(false)}/>
     )
   } else {
     return (
