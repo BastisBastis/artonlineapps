@@ -46,7 +46,7 @@ module.exports = {
       exclude: /\.module\.css$/
     },
       {
-        test: (m) => { return /\.(png|jp(e*)g|svg)$/.test(m) },
+        test: (m) => { return /\.(png|jp(e*)g|svg|gif)$/.test(m) },
         exclude: (m) => { return /node_modules/.test(m) },
         use: [{
           loader: 'url-loader',
