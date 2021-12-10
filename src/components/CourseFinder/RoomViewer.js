@@ -114,15 +114,23 @@ const RoomViewer = (props) => {
             display: MODE_ANIMATION === mode? "inline": "none"}} ref={videoRef}>
             { courseIndex>=0 &&
               (<>
-                <source 
-    src={room.courses[courseIndex].videos[1]} 
-    type='video/mp4; codecs="hvc1"' />
-  <source 
-    src={room.courses[courseIndex].videos[0]} 
-    type="video/webm" />
-              </>)
-            }
-          
+                {room.courses[courseIndex].videos.hevc && (
+                  <source 
+                  src={room.courses[courseIndex].videos[1]} 
+                  type='video/mp4; codecs="hvc1"' /> )
+                }
+                {room.courses[courseIndex].videos.webm && (
+                  <source 
+                  src={room.courses[courseIndex].videos.webm} 
+                  type="video/webm" /> )
+                }
+                {room.courses[courseIndex].videos.gif && (
+                  <img src={room.courses[courseIndex].videos.gif} />
+                   )
+                } 
+                </>
+                )
+              }    
           </video>
         </>
       

@@ -1,5 +1,9 @@
 import TestAnimWebm from "./assets/animations/Rotwebm.webm"
 import TestAnimMov from "./assets/animations/Rothevc.mp4"
+import ShowdanceGif from "./assets/animations/showdance_gif.gif"
+import BalletGif from "./assets/animations/ballet_gif.gif"
+import StreetGif from "./assets/animations/street_gif.gif"
+import BabyDanceGif from "./assets/animations/baby_gif.gif"
 
 const Rooms=[];
 
@@ -31,7 +35,7 @@ Rooms.push({
     {
       title:"Magdans",
       description:"Rulla med magen å sånt",
-      videos:[TestAnimWebm,TestAnimMov]
+      videos:{hevc:TestAnimMov, webm:TestAnimWebm, gif:ShowdanceGif}
     }
   ]
 })
@@ -74,22 +78,22 @@ Rooms.push({
     {
       title:"Hiphop/Street",
       description:"Swag å popping å locking å rocking å rolling?",
-      videos:[TestAnimWebm,TestAnimMov]
+      videos:{gif:StreetGif}
     },
     {
       title:"Barndans & dansmix",
       description:"Testa att dansa",
-      videos:[TestAnimWebm,TestAnimMov]
+      videos:{gif:BabyDanceGif}
     }, 
     {
       title:"Klassisk balett",
       description:"Sa någon Svansjön?",
-      videos:[TestAnimWebm,TestAnimMov]
+      videos:{gif:BalletGif}
     },
     {
       title:"Showdans",
       description:"Broadway & sånt",
-      videos:[TestAnimWebm,TestAnimMov]
+      videos:{gif:ShowdanceGif}
     }
   ]
 })
