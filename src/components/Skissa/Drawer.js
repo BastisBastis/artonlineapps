@@ -94,7 +94,7 @@ const Drawer = (props)=> {
         brushRadius={brushRadius}
         brushColor={brushColor}
         canvasWidth={window.innerWidth}
-        canvasHeight={window.innerHeight-buttonHeight}
+        canvasHeight={window.innerHeight}
         hideGrid={true}
         enablePanAndZoom={true}
       />

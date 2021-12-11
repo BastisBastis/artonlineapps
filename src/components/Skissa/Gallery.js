@@ -81,7 +81,7 @@ const Gallery = (props)=> {
         ref={canvasRef}
         loadTimeOffset={shouldPlay?10:1}
         canvasWidth={window.innerWidth}
-        canvasHeight={window.innerHeight-buttonHeight}
+        canvasHeight={window.innerHeight}
         hideGrid={true}
         disabled={true}
         hideInterface={true}
