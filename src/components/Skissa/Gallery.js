@@ -4,7 +4,13 @@ import React, { useRef,useState, useEffect } from "react"
 //Components
 import CanvasDraw from "react-canvas-draw";
 import ToolButton from './ToolButton'
+
+import { GrCaretNext as PlayIcon, GrHome as HomeIcon} from "react-icons/gr"
+import { BsBrush as UseIcon } from "react-icons/bs"
+import { HiOutlineChevronDoubleLeft as PrevIcon, HiOutlineChevronDoubleRight as NextIcon } from "react-icons/hi"
+
 import styles from "./Skissa.module.css"
+
 
 const buttonHeight=60;
 const slowLoadingTime=5;
@@ -83,23 +89,23 @@ const Gallery = (props)=> {
       />
       <div className={styles.toolbar}>
         < ToolButton 
-          title="Föregående"
+          icon={PrevIcon}
           callback={prevDrawing}
         />
         < ToolButton 
-          title="Nästa"
+          icon={NextIcon}
           callback={nextDrawing}
         />
         < ToolButton 
-          title="Titta"
+          icon={PlayIcon}
           callback={(()=>setShouldPlay(true))}
         />
         < ToolButton 
-          title="Använd"
+          icon={UseIcon}
           callback={()=>props.drawerLink(currentData)}
         />
         < ToolButton 
-            title="Tillbaka"
+            icon={HomeIcon}
             callback={()=>props.drawerLink()}
         />
       </div>

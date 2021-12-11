@@ -6,8 +6,13 @@ import CanvasDraw from "react-canvas-draw";
 import ToolButton from './ToolButton'
 import BrushSizePicker from "./BrushSizePicker"
 import { HexColorPicker as ColorPicker } from "react-colorful";
+import { VscSymbolColor as ColorIcon, VscSave as SaveIcon } from "react-icons/vsc"
+import { BsBrush as BrushIcon } from "react-icons/bs"
+import { GrGallery as GalleryIcon , GrUndo as UndoIcon} from "react-icons/gr"
 
 import styles from "./Skissa.module.css"
+
+const iconSize=40
 
 const Drawer = (props)=> {
   
@@ -95,7 +100,7 @@ const Drawer = (props)=> {
       />
       <div className={styles.toolbar}>
         < ToolButton 
-          title="Färg"
+          icon={ ColorIcon }
           toggle={true}
           children={[
             <div className={styles.colorPickerContainer}>
@@ -104,7 +109,7 @@ const Drawer = (props)=> {
           ]}
         />
         < ToolButton 
-          title="Pensel"
+          icon={ BrushIcon }
           toggle={true}
           children={[
             <BrushSizePicker 
@@ -114,7 +119,7 @@ const Drawer = (props)=> {
           ]}
         />
         < ToolButton 
-          title="Undo"
+          icon={ UndoIcon }
           callback={(()=>{
             if (canvasRef) {
               canvasRef.current.undo();
@@ -123,7 +128,7 @@ const Drawer = (props)=> {
           }
         />
         < ToolButton 
-          title="Spara"
+          icon={ SaveIcon }
           toggle={true}
           children={[
             <div className={styles.unCollapsed}>
@@ -140,7 +145,7 @@ const Drawer = (props)=> {
           ]}
         />
         < ToolButton 
-            title="Galleri"
+            icon={ GalleryIcon }
             callback={openGallery}
         />
       </div>

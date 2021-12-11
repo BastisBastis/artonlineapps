@@ -26,6 +26,8 @@ import {  useNavigate, Routes, Route } from "react-router-dom";
 import Gallery from "./Gallery"
 import Drawer from "./Drawer"
 
+
+
 import styles from "./Skissa.module.css"
 
 const DRAW_MODE=0;

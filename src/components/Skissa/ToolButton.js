@@ -2,8 +2,11 @@ import React, { useMemo,useState, useEffect }from "react"
 
 import styles from "./Skissa.module.css"  
 
+const iconSize=40;
+
 const ToolButton = ({
-  title="Button",
+  title,
+  icon,
   callback=()=>false,
   toggle=false,
   deactivateCallback=()=>false,
@@ -16,19 +19,24 @@ const ToolButton = ({
     if (!active || !toggle) {
       callback(e);
       setActive(toggle);
-      console.log(toggle)
+      
     } else {
       deactivateCallback(e);
       setActive(false);
     }
   }
   
+  const Icon = icon
+  
   const btnClass = active ? `${styles.button} ${styles.activeButton}` : styles.button;
   
   return (
     <div className={btnClass} onClick={action}>
+      <div className={styles.buttonLabel} >
           {title}
-          {!active || children.map(child=>child)}
+          {Icon && <Icon size={iconSize} /> }
+      </div>
+          {active && children.map(child=>child)}
     </div>
   )
 }
