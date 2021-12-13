@@ -2,3 +2,6 @@ node_modules/
 
 #ignore user data files (highscores)
 data/pitchyHighscore.json
+
+
+.env

@@ -23,15 +23,47 @@ const Drawer = (props)=> {
   
   const canvasRef = useRef();
   
+  const [activeButtons,setActiveButtons] = useState({
+    color:false,
+    brush:false,
+    save:false
+  })
+  
+  const toggleButton=(btn)=>{
+    setButtonActivity(btn,!activeButtons[btn])
+  }
+  
+  const setButtonActivity=(btn,newVal)=>{
+    const tmp={...activeButtons};
+    Object.keys(activeButtons).forEach(key=>tmp[key]=key==btn?newVal:false)
+    
+    setActiveButtons(tmp)
+  }
+  
+  const deactivateButtons=setButtonActivity
+  
+  const renderOverlay= (()=>{
+    for (const val of Object.values(activeButtons)) {
+      
+      if (val)
+        return true;
+    }
+    return false;
+  })()
+  
   const navigate = useNavigate();
   
   const buttonHeight=60;
   
   const publish = ()=>{
+    deactivateButtons()
     if (canvasRef) {
     fetch('./skissa/save', {
       method: 'POST',
-      body: JSON.stringify({data:canvasRef.current.getSaveData()}),
+      body: JSON.stringify({
+        data:canvasRef.current.getSaveData(),
+        image:canvasRef.current.getDataURL("png",false,"#fff")
+        }),
       headers: {
           'Content-type': 'application/json; charset=UTF-8'
       }
@@ -55,8 +87,9 @@ const Drawer = (props)=> {
   }
   
   const saveLocal=()=>{
+    deactivateButtons()
     if (canvasRef) {
-      console.log(canvasRef.current.getSaveData())
+      
       localStorage.setItem(
         "skissaSave",
         canvasRef.current.getSaveData()
@@ -65,6 +98,7 @@ const Drawer = (props)=> {
   }
   
   const loadLocal=()=>{
+    deactivateButtons()
     if (canvasRef) {
       
       const data= localStorage.getItem("skissaSave");
@@ -97,11 +131,26 @@ const Drawer = (props)=> {
         canvasHeight={window.innerHeight}
         hideGrid={true}
         enablePanAndZoom={true}
+        onclick={()=>deactivateButtons()}
       />
+      { 
+        renderOverlay && (
+          <div style={{
+            position:"absolute",
+            height:"100%",
+            width:"100%",
+            top:0,
+            left:0,
+          }} onClick={deactivateButtons} ></div>
+        )
+        
+      }
       <div className={styles.toolbar}>
         < ToolButton 
           icon={ ColorIcon }
           toggle={true}
+          active={activeButtons.color}
+          callback={()=>toggleButton("color")}
           children={[
             <div className={styles.colorPickerContainer}>
               <ColorPicker color={brushColor} onChange={setBrushColor} />
@@ -111,6 +160,10 @@ const Drawer = (props)=> {
         < ToolButton 
           icon={ BrushIcon }
           toggle={true}
+          active={activeButtons.brush}
+          callback={()=>{
+            toggleButton("brush")
+            }}
           children={[
             <BrushSizePicker 
               radius={brushRadius} 
@@ -121,6 +174,7 @@ const Drawer = (props)=> {
         < ToolButton 
           icon={ UndoIcon }
           callback={(()=>{
+            deactivateButtons()
             if (canvasRef) {
               canvasRef.current.undo();
               }
@@ -130,6 +184,8 @@ const Drawer = (props)=> {
         < ToolButton 
           icon={ SaveIcon }
           toggle={true}
+          active={activeButtons.save}
+          callback={()=>toggleButton("save")}
           children={[
             <div className={styles.unCollapsed}>
               <div className={styles.saveMenuButton} onClick={saveLocal}>

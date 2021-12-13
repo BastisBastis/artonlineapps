@@ -1,7 +1,7 @@
 
 .toolbar {
   position:relative;
-  top:-60px;
+  bottom:calc(1rem + 60px);
   height:60px;
   margin:0;
   padding:0;
@@ -10,8 +10,9 @@
 }
 
 .button {
-  height:3rem;
-  width:3rem;
+  /*height:3rem;
+  width:3rem;*/
+  padding:0.5rem;
   padding:auto;
   border-radius:0.5rem;
   border:solid 1px black;
@@ -21,15 +22,17 @@
 }
   
 .activeButton {
-  background:#aaaaaa;
+  background:#000;
+  border-color:#fff;
+  color:#fff;
 }
 
 .buttonLabel {
-  position:absolute;
+  /*position:absolute;
   top:50%;
   left:50%;
   transform: translate(-50%,-50%);
-  padding:0;
+  padding:0;*/
 }
 
 .colorPickerContainer {
@@ -45,15 +48,24 @@
   
 .unCollapsed {
   position:absolute;
-  width:100%;
-  background:#cdcdcd;
+  color:black;
+  left:-0.5rem;
+  /*width:100%;*/
+  /*background:#fff;*/
   bottom:60px;
-  border:1px solid black;
+  padding:0;
+  /*border:1px solid black;
+  border-radius:0.5rem;
+  overflow:hidden;*/
 }
 
 .saveMenuButton {
-  width:100%;
+  /*width:100%;*/
   border: 1px solid black;
+  border-radius:0.5rem;
   text-align:center;
   padding:0.5em 0;
+  width:5rem;
+  margin:1rem 0;
+  
 }

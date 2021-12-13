@@ -1,21 +1,11 @@
 /*
 
-Öppna appen: Canvas och förladdad pensel
+att göra:
 
-Verktygsfält:
-
-Ritverktyg
-  Färg
-  Pensel
-Generera länk
-Publicera
-Galleri
-
-Galleri:
-nästa (dlumpvis ordnibg)
-föregående
-Fortsätt på
-
+förhindra dubletter
+rapportera olämplig bild
+slumpvis ordning
+startfärg
 
 */
 import React, { useRef,useState, useEffect }from "react"

@@ -9,10 +9,11 @@ const ToolButton = ({
   icon,
   callback=()=>false,
   toggle=false,
+  active=false,
   deactivateCallback=()=>false,
   children=[]
   })=> {
-    
+    /*
     const [active,setActive]=useState(false)
   
   const action = e=>{
@@ -26,15 +27,19 @@ const ToolButton = ({
     }
   }
   
+  const deactivate=()=>
+    setActive=false;
+  */
+  
   const Icon = icon
   
   const btnClass = active ? `${styles.button} ${styles.activeButton}` : styles.button;
   
   return (
-    <div className={btnClass} onClick={action}>
-      <div className={styles.buttonLabel} >
+    <div className={btnClass} >
+      <div className={styles.buttonLabel} onClick={callback}>
           {title}
-          {Icon && <Icon size={iconSize} /> }
+          {Icon && <Icon size={iconSize} color={active?"#fff":"#000"}/> }
       </div>
           {active && children.map(child=>child)}
     </div>

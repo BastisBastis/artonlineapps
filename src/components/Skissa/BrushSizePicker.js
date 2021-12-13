@@ -8,7 +8,14 @@ const BrushSizePicker = props=>{
   const minRadius=1;
   
   return (
-    <div className={styles.unCollapsed} onClick={
+    <div className={styles.unCollapsed} style={{
+      width:"68px",
+      border:"solid 1px black",
+      borderRadius:"0.5rem",
+      background:"white",
+      fontSize:"1.2rem",
+      
+    }} onClick={
       e=>{
         e.stopPropagation()}
     }>
