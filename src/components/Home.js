@@ -19,6 +19,7 @@ import VellingeIcon from "../assets/images/VellingeKommun.png"
 import ArtistenLogo from "../assets/images/KSLogga.png"
 import { MdOutlineDraw as SkissaIcon } from 'react-icons/md'
 import { GiMetronome as MetronomeIcon } from 'react-icons/gi'
+import CourseFinderIcon from '../assets/images/mapIcon.png'
 
 const Home = () => {
   
@@ -38,7 +39,7 @@ const Home = () => {
         <AppLink external noStretch to="https://www.vellinge.se/vellinge-kulturskola-artisten" title="Hemsida" image={VellingeIcon} />
         
         <AppLink external noStretch to="https://svvellinge.speedadmin.dk/registration#/" title="Anmälan" image={ArtistenLogo} />
-        <AppLink to="/coursefinder" title="Hitta rätt kurs" image={SkissaIcon} iconColor={"#000"} />
+        <AppLink to="/coursefinder" title="Hitta rätt kurs" image={CourseFinderIcon} />
       </div>
     </nav> 
     
