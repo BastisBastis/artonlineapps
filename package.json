@@ -1,7 +1,9 @@
 {
   "version": "1.0.0",
   "scripts": {
-    "build": "react-scripts build"
+    "start": "node index.js",
+    "build": "webpack --config webpack.prod.js",
+    "start-prod": "NODE_ENV=production node index.js"
   },
   "dependencies": {
     "@babel/core": "7.x.x",
