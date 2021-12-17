@@ -26,7 +26,7 @@ const Home = () => {
   
   
   return (
-    
+    <div className={styles.background} >
     <nav className={styles.main} >
       <Title />
       <div className={styles.linkContainer}>
@@ -42,7 +42,7 @@ const Home = () => {
         <AppLink to="/coursefinder" title="Hitta rätt kurs" image={CourseFinderIcon} />
       </div>
     </nav> 
-    
+    </div>
   );
 }
 

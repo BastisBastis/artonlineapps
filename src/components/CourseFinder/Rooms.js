@@ -98,4 +98,59 @@ Rooms.push({
   ]
 })
 
+//Slagverksrummet
+Rooms.push({
+  title:"Slagverksrummet",
+  x:0.0039,
+  y:0.5562,
+  popupX:0.06,
+  popupY:0.17,
+  points:[{
+    x:0.0092,
+    y:0.002
+  }, {
+    x:0.0533,
+    y:0.0282
+  }, {
+    x:0.0562,
+    y:0.001
+  },{
+    x:0.1193,
+    y:0.0386
+  },{
+    x:0.1138,
+    y:0.0886
+  },{
+    x:0.1168,
+    y:0.0905
+  },{
+    x:0.116,
+    y:0.119
+  },{
+    x:0.1122,
+    y:0.153
+  },{
+    x:0.1123,
+    y:0.13
+  },{
+    x:0.1095,
+    y:0.1285
+  },{
+    x:0.1074,
+    y:0.15
+  },{
+    x:0.00021,
+    y:0.0857
+  }],
+  description:"Här bankas det friskt!",
+  courseDescription:"Slagverk kan man välja här.",
+  courses:[
+    {
+      title:"Slagverk",
+      description:"Buller och bång",
+      videos:{hevc:TestAnimMov, webm:TestAnimWebm}
+    }
+  ]
+})
+
 export default Rooms

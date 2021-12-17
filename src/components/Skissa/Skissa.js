@@ -15,7 +15,7 @@ import {  useNavigate, Routes, Route } from "react-router-dom";
 
 import Gallery from "./Gallery"
 import Drawer from "./Drawer"
-
+import HomeButton from "../HomeButton"
 
 
 import styles from "./Skissa.module.css"
@@ -31,6 +31,7 @@ const Skissa = ()=> {
   
   if (mode===DRAW_MODE) {
     return (
+      <>
       <Drawer 
       drawingData={currentDrawing}
       galleryLink={((drawingData,index)=>{
@@ -38,10 +39,13 @@ const Skissa = ()=> {
         setCurrentDrawing(drawingData)
       })
       }/>
+      <HomeButton />
+      </>
     )
   }
   else if (mode===GALLERY_MODE) {
     return (
+      <>
       <Gallery 
         
         drawerLink={((drawingData)=>{
@@ -51,6 +55,8 @@ const Skissa = ()=> {
         })
       }
       />
+      <HomeButton />
+      </>
     )
   }
 }

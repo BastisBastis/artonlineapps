@@ -11,13 +11,14 @@ const MapPopup = (props) => {
   const boxStyle={
     position:"fixed",
     top:"1rem",
-    left:"1rem",
+    left:"50vw",
     width:"8em",
     padding:"0.5rem",
     background:"#fff",
     border:"solid 1px black",
     borderRadius:"0.5rem",
-    whiteSpace: "pre-wrap"
+    whiteSpace: "pre-wrap",
+    transform:"translateX(-50%)"
   }
   
   return (
