@@ -148,7 +148,7 @@ Rooms.push({
     {
       title:"Slagverk",
       description:"Buller och bång",
-      videos:{hevc:TestAnimMov, webm:TestAnimWebm}
+      videos:{hevc:TestAnimMov, webm:TestAnimWebm, gif:ShowdanceGif}
     }
   ]
 })

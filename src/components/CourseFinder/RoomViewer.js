@@ -73,6 +73,8 @@ const RoomViewer = (props) => {
       
     }
   }
+
+  
   
   return (
     <div style={bgStyle}>
@@ -125,7 +127,7 @@ const RoomViewer = (props) => {
           </>
         )}
           
-          <video webkitPlaysInline playsInline width={window.innerWidth}  preload style={{
+          <video playsInline width={window.innerWidth}  preload style={{
             visibility:"visible", 
             backgroundColor:"transparent", 
             display: MODE_ANIMATION === mode? "inline": "none"}} ref={videoRef}>
@@ -145,7 +147,7 @@ const RoomViewer = (props) => {
                 )
               }    
           </video>
-          {courseIndex>=0 && room.courses[courseIndex].videos.gif && (
+          {courseIndex>=0 && room.courses[courseIndex].videos.gif && !(room.courses[courseIndex].videos.hevc || room.courses[courseIndex].videos.webm) && (
                   <img style={{
                     maxHeight:"70%",
                     maxWidth:"100%",

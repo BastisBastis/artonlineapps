@@ -1,5 +1,6 @@
 import React from "react"
 
+const showOverlay = false;
 
 const RoomOverlay = (props) => {
   
@@ -17,7 +18,8 @@ const RoomOverlay = (props) => {
     position:"absolute",
     top: (room.y  *mapHeight+mapY)+"px",
     left: (room.x  *mapWidth+mapX)+"px",
-    opacity:0.5//props.selected?0.2:0
+    opacity:showOverlay?(0.5):(props.selected?0.2:0)
+
   }
   
   let roomWidth=0;
