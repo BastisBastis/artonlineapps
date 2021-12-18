@@ -19,6 +19,7 @@ const RoomOverlay = (props) => {
     top: (room.y  *mapHeight+mapY)+"px",
     left: (room.x  *mapWidth+mapX)+"px",
     opacity:showOverlay?(0.5):(props.selected?0.2:0)
+
   }
   
   let roomWidth=0;

@@ -4,6 +4,8 @@ import styles from "../Home.module.css"
 
 import logo from "../../assets/images/KSLogga.png"
 
+const animateTag=false;
+
 const Title = ()=> {
 
 
@@ -18,18 +20,13 @@ const Title = ()=> {
       width:"10em"
     }
     
-    const tagStyle={
-      position:"relative",
-      top:"-4.8em",
-      left:"1.2em",
-      fontSize:"1.5em",
-      fontWeight:600
-    }
+    const tagClass = styles.tag + (animateTag ? " "+styles.blinking:"")
+    
 
   return (
     <div style={imgContStyle}>
       <img src={logo} style={imgStyle} />
-      <p style={tagStyle} className={styles.blink}>online</p>
+      <p className={tagClass}>online</p>
     </div>
   )
 }

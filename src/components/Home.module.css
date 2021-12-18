@@ -30,17 +30,24 @@
   justify-content:space-evenly;
 }
 
-.blink = {
-  animation: 0.4s ease-out fadeIn 1;
+.tag {
+  position:relative;
+      top:-4.8em;
+      left:1.2em;
+      font-size:1.5em;
+      font-weight:600;
+  
 }
 
-@keyframes fadeIn {
+.blinking {
+  animation: blink 0.5s  alternate infinite;
+}
+
+@keyframes blink {
   0% {
-    opacity: 0; 
-    visibility: hidden;
+    opacity: 0.0;
   }
   100% {
-    opacity: 1;
-    visibility: visible;
+    opacity:2;
   }
 }
