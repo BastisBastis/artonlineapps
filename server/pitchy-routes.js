@@ -3,6 +3,13 @@ const utils=require("./utils")
 
 exports.setupRoutes=app=>{
 
+//Called if the Get-request (written below) determines the score is a new highscore. 
+//Adds the queried name/score to the highscore file, saves and sends a highscore json.
+//newHs= []
+//hs.name = player name
+//hs.score = score
+//hs.player = if the score is just set by the current player
+
 app.post('/pitchy/highscore',(req, res)=> {
   const score = req.body.score;
   const name = req.body.name;
@@ -31,6 +38,7 @@ app.post('/pitchy/highscore',(req, res)=> {
   res.json(newHs);
 })
 
+//Get request called when the highscore-scene is shown. Checks if the queried score is a new highscore and sets data.newHighscore to true if so. Also sends the highscore list
 app.get('/pitchy/highscore',(req, res)=> {
   const score = req.query.score;
   const hs = utils.getJsonFile(__dirname+"/../data/pitchyHighscore.json")
