@@ -1,5 +1,7 @@
 node_modules/
 
+dist/
+
 #ignore user data files (highscores)
 data/pitchyHighscore.json
 

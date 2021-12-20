@@ -287,22 +287,22 @@ Rooms.push({
 //Konsertsalsgolvet
 Rooms.push({
   title:"Ensemblesalen",
-  x:0.88,
-  y:0.55,
+  x:0.898,
+  y:0.565,
   popupX:0.06,
   popupY:0.17,
   points:[{
-    x:0.025,
+    x:0.0273,
     y:0
   }, {
-    x:0.115,
-    y:0.112
+    x:0.0985,
+    y:0.0429
   }, {
-    x:0.09,
-    y:0.3425
+    x:0.0815,
+    y:0.2037
   },{
-    x:0,
-    y:0.23
+    x:0.0102,
+    y:0.1605
   }],
   description:"Här sitter publiken och gottar sig!",
   courseDescription:"Egentligen inga kurser här.",
