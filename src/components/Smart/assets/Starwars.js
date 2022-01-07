@@ -31,6 +31,11 @@ const videoData = {
     {title:"Fiol",src:vio},
     {title:"Tvärflöjt",src:flj},
     {title:"Piano",src:pia}
-  ]
+  ],
+  width:1280,
+  height:720,
+  startY:186,
+  partHeight:179,
+  frameMarginY:4,
 }
 export default videoData;
