@@ -65,9 +65,13 @@ module.exports = {
                 name: "[name].[ext]",
                 outputPath: "video"
             }
-        }
-    ]
-}
+          }
+        ]
+      },
+      {
+        test: /\mp3|wav|mpe?g|ogg?$/i,
+        use: "file-loader"
+      }
     ]
   },
   plugins: [],

@@ -32,7 +32,7 @@ const Home = () => {
       <div className={styles.linkContainer}>
         <AppLink to="/notereader" title="Pricka Noten" image={NoteReaderIcon} />
         <AppLink to="/tuner" title="Stämapparat" image={TunerIcon} />
-        <AppLink external to="https://www.artistenonline.se" title="S.M.Art" image={SmartIcon} />
+        <AppLink to="/smart" title="S.M.Art" image={SmartIcon} />
         <AppLink to="/pitchy" title="Pitchy Bird" image={PitchyBirdIcon} />
         <AppLink to="/metronome" title="Metronom" image={MetronomeIcon} iconColor={"#000"} />
         <AppLink to="/skissa" title="Skissa" image={SkissaIcon} iconColor={"#000"} />

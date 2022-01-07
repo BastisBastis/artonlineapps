@@ -8,7 +8,7 @@ import MyErrorBoundry from './ErrorBoundry'
 import Home from "./Home"
 import Tuner from "./Tuner"
 import SheetLine from "./SheetLine"
-import Smart from "./Smart"
+import Smart from "./Smart/Smart"
 import PitchyBird from "./PitchyBird"
 import Metro from "./Metronome"
 import Skissa from "./Skissa/Skissa"
