@@ -10,6 +10,7 @@
     "@babel/preset-env": "7.x.x",
     "@babel/preset-react": "7.x.x",
     "@ion-phaser/react": "^1.3.0",
+    "@react-hook/window-size": "^3.0.7",
     "animated-scroll-to": "^2.2.0",
     "babel-loader": "8.x.x",
     "css-loader": "2.1.x",
