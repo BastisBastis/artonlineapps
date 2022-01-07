@@ -1,3 +1,5 @@
+
+
 const Smart = ()=> {
   
   window.location.href = 'https://www.artistenonline.se'; 
