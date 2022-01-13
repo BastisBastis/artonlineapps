@@ -40,15 +40,7 @@ const videoDataLow = {
   frameMarginY:4,
 }
 
-/*
-width: 1920,
-                                height: 1080,
-                                partHeight: 268,
-                                audioFolder:folder,
-                                audioFiles:files,
-                                //startY:186, starwars.mp4
-                                startY: 276,
-*/
+
 const videoDataHigh={
   videoSrc:videoHigh,
   videoRate:0.955,
