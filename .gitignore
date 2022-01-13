@@ -8,5 +8,5 @@ data/pitchyHighscore.json
 
 .env
 
-src/components/smart/assets/
-src/components/smart/smartplayer/
+src/components/Smart/assets/
+src/components/Smart/smartplayer/
