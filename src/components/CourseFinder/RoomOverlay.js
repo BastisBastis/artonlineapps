@@ -1,6 +1,6 @@
 import React from "react"
 
-const showOverlay = true;
+const showOverlay = false;
 
 const RoomOverlay = (props) => {
   
